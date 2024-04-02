@@ -7,7 +7,7 @@ import { connectDB } from "./startup/db";
 import { RouteHandler } from "./app";
 connectDB();
 app.use(express.json());
-RouteHandler(app)
+RouteHandler(app);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

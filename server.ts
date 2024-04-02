@@ -2,12 +2,14 @@ import express from "express";
 import { config } from "dotenv";
 const app = express();
 config();
-const { PORT } = process.env;
+const port = process.env.PORT || 3000;
 import { connectDB } from "./startup/db";
+import { RouteHandler } from "./app";
 connectDB();
 app.use(express.json());
-app.listen(PORT || 3000, () => {
-  console.log(`Server running on port ${PORT}`);
+RouteHandler(app)
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 export default app;

@@ -18,7 +18,7 @@ export const User = mongoose.model<IUserDoc>(
       required: true,
       unique: true
     },
-    phone: {
+    phone_no: {
       type: String,
       minlength: 10,
       maxlength: 20,

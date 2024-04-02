@@ -15,7 +15,7 @@ export const signupController = async (data: signupUserDto) => {
   if (user) return { status: 409, message: "User already registered" };
 
   const { hashedPassword } = await getHashedPassword(password);
-  console.log(hashedPassword)
+
   user = new User({
     username: username,
     phone_no: phone_no,

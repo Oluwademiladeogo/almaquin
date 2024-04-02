@@ -5,7 +5,7 @@ export const User = mongoose.model<IUserDoc>(
   "Users",
   new mongoose.Schema<IUserDoc>({
     username: {
-        //Will be a combination of first and last name
+      //Will be a combination of first and last name
       type: String,
       minlength: 2,
       maxlength: 255,
@@ -16,7 +16,7 @@ export const User = mongoose.model<IUserDoc>(
       minlength: 5,
       maxlength: 255,
       required: true,
-      unique: true
+      unique: true,
     },
     phone_no: {
       type: String,
@@ -26,15 +26,15 @@ export const User = mongoose.model<IUserDoc>(
       unique: true,
     },
     password: {
-        type: String,
-        required: true,
-        minlength: 8,
-        maxlength: 255
+      type: String,
+      required: true,
+      minlength: 8,
+      maxlength: 255,
     },
     role: {
-        type: String,
-        enum: ["User", "Admin"],
-        default: "User"
-    }
+      type: String,
+      enum: ["User", "Admin"],
+      default: "User",
+    },
   })
 );

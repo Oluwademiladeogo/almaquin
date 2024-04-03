@@ -5,3 +5,8 @@ export interface signupUserDto {
   password: string;
   role: string;
 }
+
+export interface loginUserDto {
+  email: string;
+  password: string;
+}

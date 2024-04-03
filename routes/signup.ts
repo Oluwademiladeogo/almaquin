@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { signupController } from "../controllers/signup";
 
-const router = express.Router();
+const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const { status, message } = await signupController(req.body);

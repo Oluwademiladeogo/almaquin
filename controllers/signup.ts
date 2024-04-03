@@ -3,7 +3,7 @@ import { validate } from "../validators/signup";
 import { signupUserDto } from "../dto/users";
 import { getHashedPassword } from "../helpers/hashPassword";
 
-export const signupController = async (data: signupUserDto) => {
+export const signupController = async (data: signupUserDto): Promise<any> => {
   const { error } = validate(data);
 
   if (error) return { status: 400, message: error.details[0].message };

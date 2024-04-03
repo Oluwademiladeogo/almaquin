@@ -5,3 +5,10 @@ export interface IUserDoc extends Document {
   password: string;
   role: string;
 }
+
+
+export type JwtPayload = { 
+  id: unknown
+  name: string
+  phone: string
+}

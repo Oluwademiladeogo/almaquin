@@ -1,18 +1,19 @@
+import { Request, Response, Router } from "express";
 import { User } from "../models/users";
 import { validate } from "../validators/signup";
 import { signupUserDto } from "../dto/users";
 import { getHashedPassword } from "../helpers/hashPassword";
 
-export const signupController = async (data: signupUserDto): Promise<any> => {
-  const { error } = validate(data);
+export const signupController = async (req:Request, res:Response): Promise<any> => {
+  const { error } = validate(req.body);
 
-  if (error) return { status: 400, message: error.details[0].message };
+  if (error) res.status(400).json({message: error.details[0].message });
 
-  let { username, phone_no, email, password } = data;
+  let { username, phone_no, email, password } = req.body;
 
   let user = await User.findOne({ email: email });
 
-  if (user) return { status: 409, message: "User already registered" };
+  if (user) res.status(409).json({message: "User already registered" });
 
   const { hashedPassword } = await getHashedPassword(password);
 
@@ -25,5 +26,5 @@ export const signupController = async (data: signupUserDto): Promise<any> => {
 
   await user.save();
 
-  return { status: 201, message: "User created successfully" };
+  res.status(201).json({message: "User created successfully" });
 };

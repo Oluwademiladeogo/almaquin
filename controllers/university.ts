@@ -1,0 +1,91 @@
+// controllers/university.ts
+
+import { Request, Response } from "express";
+import { University } from "../models/university";
+import { IUniversityDoc } from "../types";
+
+export const createUniversity = async (req: Request, res: Response) => {
+  try {
+    const university: IUniversityDoc = await University.create(req.body);
+    res.status(201).json({ message: "success" });
+  } catch (error) {
+    console.error("Error creating university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getUniversityById = async (req: Request, res: Response) => {
+  try {
+    const university = await University.findById(req.params.id);
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+    res.status(200).json(university);
+  } catch (error) {
+    console.error("Error fetching university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getUniversityByName = async (req: Request, res: Response) => {
+  try {
+    const universityName = (req.query.university as string).trim();
+
+    const university = await University.findOne({ name: universityName });
+
+    if (!university) {
+      console.log(university);
+      console.log(universityName);
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    res.status(200).json(university);
+  } catch (error) {
+    console.error("Error fetching university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getAllUniNamesController = async (req: Request, res: Response) => {
+  try {
+    //gets all university names and returns then as an array
+    const universities = await University.find({}, { name: 1 });
+    console.log(universities)
+    const universityNames = universities.map((university) => university.name);
+
+    res.status(200).json({ universities: universityNames });
+  } catch (error) {
+    console.error("Error fetching universities:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateUniversityById = async (req: Request, res: Response) => {
+  try {
+    const university = await University.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+    res.status(200).json({ message: "success" });
+  } catch (error) {
+    console.error("Error updating university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const deleteUniversityById = async (req: Request, res: Response) => {
+  try {
+    const university = await University.findByIdAndDelete(req.params.id);
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+    res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

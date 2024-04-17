@@ -1,3 +1,5 @@
+import { Document } from "mongoose";
+
 export interface IUserDoc extends Document {
   username: string;
   email: string;
@@ -6,9 +8,39 @@ export interface IUserDoc extends Document {
   role: string;
 }
 
+export interface IProgram {
+  name: string;
+  certs: string[];
+}
 
-export type JwtPayload = { 
-  id: unknown
-  name: string
-  phone: string
+export interface IAcademic {
+  name: string;
+  programs: IProgram[];
+}
+
+export interface IUndergraduate {
+  name: string;
+  programs: IProgram[];
+}
+
+export interface IPostgraduate {
+  name: string;
+  programs: IProgram[];
+}
+
+export interface IUniversityDoc extends Document {
+  name: string;
+  picture: string;
+  websiteLink: string;
+  overview: Record<string, string>;
+  schools: IAcademic[];
+  undergraduate: IUndergraduate[];
+  postgraduate: IPostgraduate[];
+  relevantLinks: Record<string, string>;
+}
+
+export interface JwtPayload {
+  id: unknown;
+  name: string;
+  phone: string;
 }

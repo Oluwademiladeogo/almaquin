@@ -20,8 +20,8 @@ export const User = mongoose.model<IUserDoc>(
     },
     phone_no: {
       type: String,
-      minlength: 10,
-      maxlength: 20,
+      minlength: 7,
+      maxlength: 15,
       required: true,
       unique: true,
     },

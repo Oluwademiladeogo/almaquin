@@ -1,11 +1,11 @@
 import { User } from "../models/users";
 import bcrypt from "bcrypt";
-import { JwtPayload } from "../types";
+import { JwtPayload } from "../types/types";
 import * as jwt from "jsonwebtoken";
 import { loginUserDto } from "../dto/users";
 import validate from "../validators/login";
 
-export const  createLoginToken = async (data: loginUserDto): Promise<any> => {
+export const createLoginToken = async (data: loginUserDto): Promise<any> => {
   const { error } = validate(data);
   if (error) return { status: 400, message: error.details[0].message };
 

@@ -7,6 +7,8 @@ import { connectDB } from "./startup/db";
 import { RouteHandler } from "./app";
 connectDB();
 app.use(express.json());
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 RouteHandler(app);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

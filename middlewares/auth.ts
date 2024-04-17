@@ -14,7 +14,7 @@ export const authenticateUser = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies.authToken;
+  const token = req.cookies?.authToken;
 
   if (!token) {
     return res.status(401).json({ message: "Unauthorized: No token provided" });
@@ -28,14 +28,20 @@ export const authenticateUser = (
     return res.status(401).json({ message: "Unauthorized: Invalid token" });
   }
 };
-
 export const ensureAdmin = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const token = req.cookies?.authToken;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  }
+
   try {
-    const user = await User.findById(req.user?.id);
+    const decoded = jwt.verify(token, process.env.JWTKEY || "") as JwtPayload;
+    const user = await User.findById(decoded.id);
     if (!user || user.role !== "Admin") {
       return res.status(403).json({ message: "Forbidden: Admin access required" });
     }

@@ -1,7 +1,7 @@
-import { Request, Response, Router } from "express";
+import { Request, Response } from "express";
 import { User } from "../models/users";
 import { validate } from "../validators/signup";
-import { signupUserDto } from "../dto/users";
+import { SignupUserDto } from "../dto/users";
 import { getHashedPassword } from "../helpers/hashPassword";
 
 export const signupController = async (
@@ -12,7 +12,17 @@ export const signupController = async (
 
   if (error) return res.status(400).json({ message: error.details[0].message });
 
-  let { username, phone_no, email, password } = req.body;
+  let {
+    surname,
+    firstName,
+    birthday,
+    phoneNo,
+    email,
+    presentSchool,
+    classLevel,
+    reasonForJoining,
+    password
+  } = req.body;
 
   let user = await User.findOne({ email: email });
 
@@ -21,10 +31,19 @@ export const signupController = async (
   const { hashedPassword } = await getHashedPassword(password);
 
   user = new User({
-    username: username,
-    phone_no: phone_no,
+    username: `${surname} ${firstName}`,
     email: email,
+    phone_no: phoneNo,
     password: hashedPassword,
+    role: "User",
+    // Add other details to the user object
+    // Ensure that the field names match your model
+    surname: surname,
+    firstName: firstName,
+    birthday: birthday,
+    presentSchool: presentSchool,
+    classLevel: classLevel,
+    reasonForJoining: reasonForJoining
   });
 
   await user.save();

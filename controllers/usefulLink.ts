@@ -1,6 +1,23 @@
 import { Request, Response } from "express";
 import { UsefulLink } from "../models/usefulLink";
 
+
+export const getUsefulLinks = async (req: Request, res: Response) => {
+    try {
+      const usefulLinks = await UsefulLink.findOne({});
+  
+      if (!usefulLinks) {
+        return res.status(404).json({ error: "Useful links not found" });
+      }
+  
+      res.status(200).json({ usefulLinks });
+    } catch (error) {
+      console.error("Error fetching useful links:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+  
 export const addUsefulLinks = async (req: Request, res: Response) => {
   try {
     const { links } = req.body;

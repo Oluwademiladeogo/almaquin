@@ -25,21 +25,43 @@ export const getUniversityByName = async (req: Request, res: Response) => {
     let programs;
     if (academicType === "undergraduate") {
       programs = university.undergraduate;
-    } 
+    }
     if (academicType === "schools") {
       programs = university.schools;
-    }else if (academicType === "postgraduate") {
+    } else if (academicType === "postgraduate") {
       programs = university.postgraduate;
     } else {
       // If academicType is not specified or invalid, return all programs
-      programs = 
-        university
-      ;
+      programs = university;
     }
 
     res.status(200).json(programs);
   } catch (error) {
     console.error("Error fetching university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getUniversityDescription = async (req: Request, res: Response) => {
+  try {
+    const universityName = (req.query.university as string).trim();
+
+    const university = await University.findOne({ name: universityName });
+
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    const universityDescription = {
+      name: university.name,
+      picture: university.picture,
+      websiteLink: university.websiteLink,
+      overview: university.overview,
+    };
+
+    res.status(200).json(universityDescription);
+  } catch (error) {
+    console.error("Error fetching university description:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -54,26 +76,26 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "University not found" });
     }
 
-    const undergraduatePrograms = university.undergraduate.map(academic => ({
+    const undergraduatePrograms = university.undergraduate.map((academic) => ({
       academicName: academic.name,
-      programs: academic.programs.map(program => program.name),
-    }));
-    
-    const postgraduatePrograms = university.postgraduate.map(academic => ({
-      academicName: academic.name,
-      programs: academic.programs.map(program => program.name),
+      programs: academic.programs.map((program) => program.name),
     }));
 
-    const schoolsPrograms = university.schools.map(academic => ({
+    const postgraduatePrograms = university.postgraduate.map((academic) => ({
       academicName: academic.name,
-      programs: academic.programs.map(program => program.name),
+      programs: academic.programs.map((program) => program.name),
+    }));
+
+    const schoolsPrograms = university.schools.map((academic) => ({
+      academicName: academic.name,
+      programs: academic.programs.map((program) => program.name),
     }));
 
     const universityData = {
       name: university.name,
       undergraduatePrograms,
       postgraduatePrograms,
-      schoolsPrograms 
+      schoolsPrograms,
     };
 
     res.status(200).json(universityData);
@@ -82,7 +104,6 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 
 export const updateUniversityById = async (req: Request, res: Response) => {
   try {

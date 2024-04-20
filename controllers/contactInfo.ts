@@ -33,7 +33,7 @@ export const updateContactInfo = async (req: Request, res: Response) => {
   try {
     const { phone, email, fax } = req.body;
 
-    const updatedContact = await Contact.findOneAndUpdate({}, { phone, email, fax }, { new: true });
+    const updatedContact = await ContactInfo.findOneAndUpdate({}, { phone, email, fax }, { new: true });
 
     if (!updatedContact) {
       return res.status(404).json({ error: "Contact information not found" });

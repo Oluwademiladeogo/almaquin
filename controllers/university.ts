@@ -1,5 +1,3 @@
-// controllers/university.ts
-
 import { Request, Response } from "express";
 import { University } from "../models/university";
 import { IUniversityDoc } from "../types/types";
@@ -13,23 +11,41 @@ export const createUniversity = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-export const getUniversityById = async (req: Request, res: Response) => {
+export const getUniversityByName = async (req: Request, res: Response) => {
   try {
-    const university = await University.findById(req.params.id);
+    const universityName = (req.query.university as string).trim();
+    const academicType = (req.query.academicType as string)?.toLowerCase(); // "undergraduate" or "postgraduate"
+
+    const university = await University.findOne({ name: universityName });
 
     if (!university) {
       return res.status(404).json({ error: "University not found" });
     }
 
-    res.status(200).json(university);
+    let programs;
+    if (academicType === "undergraduate") {
+      programs = university.undergraduate;
+    } 
+    if (academicType === "schools") {
+      programs = university.schools;
+    }else if (academicType === "postgraduate") {
+      programs = university.postgraduate;
+    } else {
+      // If academicType is not specified or invalid, return all programs
+      programs = 
+        university
+      ;
+    }
+
+    res.status(200).json(programs);
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-export const getUniversityByName = async (req: Request, res: Response) => {
+
+export const getAllUniversityDetails = async (req: Request, res: Response) => {
   try {
     const universityName = (req.query.university as string).trim();
 
@@ -39,26 +55,28 @@ export const getUniversityByName = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "University not found" });
     }
 
-    res.status(200).json(university);
+    const undergraduatePrograms = university.undergraduate.map(academic => ({
+      academicName: academic.name,
+      programs: academic.programs.map(program => program.name),
+    }));
+    
+    const postgraduatePrograms = university.postgraduate.map(academic => ({
+      academicName: academic.name,
+      programs: academic.programs.map(program => program.name),
+    }));
+
+    const universityData = {
+      name: university.name,
+      undergraduatePrograms,
+      postgraduatePrograms
+    };
+
+    res.status(200).json(universityData);
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-export const getAllUniNamesController = async (req: Request, res: Response) => {
-  try {
-    //gets all university names and returns then as an array
-    const universities = await University.find({}, { name: 1 });
-    const universityNames = universities.map((university) => university.name);
-
-    res.status(200).json({ universities: universityNames });
-  } catch (error) {
-    console.error("Error fetching universities:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 export const updateUniversityById = async (req: Request, res: Response) => {
   try {
     const university = await University.findByIdAndUpdate(

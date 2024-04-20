@@ -29,7 +29,7 @@ export const createLoginToken = async (data: loginUserDto): Promise<any> => {
 
     const secret: string = process.env.JWTKEY || "";
 
-    const token = jwt.sign(payload, secret, { expiresIn: "3d" }); // Token expires in 1 hour
+    const token = jwt.sign(payload, secret, { expiresIn: "3d" }); 
 
     return {
       status: 200,

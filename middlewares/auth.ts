@@ -43,7 +43,9 @@ export const ensureAdmin = async (
     const decoded = jwt.verify(token, process.env.JWTKEY || "") as JwtPayload;
     const user = await User.findById(decoded.id);
     if (!user || user.role !== "Admin") {
-      return res.status(403).json({ message: "Forbidden: Admin access required" });
+      return res
+        .status(403)
+        .json({ message: "Forbidden: Admin access required" });
     }
     next();
   } catch (error) {

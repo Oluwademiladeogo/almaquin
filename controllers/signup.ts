@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/users";
 import { validate } from "../validators/signup";
-import { SignupUserDto } from "../dto/users";
 import { getHashedPassword } from "../helpers/hashPassword";
 
 export const signupController = async (
@@ -21,7 +20,7 @@ export const signupController = async (
     presentSchool,
     classLevel,
     reasonForJoining,
-    password
+    password,
   } = req.body;
 
   let user = await User.findOne({ email: email });
@@ -43,7 +42,7 @@ export const signupController = async (
     birthday: birthday,
     presentSchool: presentSchool,
     classLevel: classLevel,
-    reasonForJoining: reasonForJoining
+    reasonForJoining: reasonForJoining,
   });
 
   await user.save();

@@ -11,7 +11,6 @@ export interface SignupUserDto {
   role: string;
 }
 
-
 export interface loginUserDto {
   email: string;
   password: string;

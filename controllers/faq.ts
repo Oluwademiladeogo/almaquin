@@ -13,7 +13,6 @@ export const getFAQs = async (req: Request, res: Response) => {
 
     const { schoolsFAQs, undergraduateFAQs, postgraduateFAQs } = faqs;
 
-    // Send the FAQs as they are, without formatting
     const formattedFAQs = {
       schoolsFAQs,
       undergraduateFAQs,

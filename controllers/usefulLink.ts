@@ -36,3 +36,23 @@ export const updateUsefulLinks = async (req: Request, res: Response) => {
     }
   };
   
+  export const deleteUsefulLink = async (req: Request, res: Response) => {
+    try {
+      const { link } = req.body;
+  
+      const updatedUsefulLink = await UsefulLink.findOneAndUpdate(
+        {},
+        { $unset: { [`links.${link}`]: 1 } },
+        { new: true }
+      );
+  
+      if (!updatedUsefulLink) {
+        return res.status(404).json({ error: "Useful links not found" });
+      }
+  
+      res.status(200).json({ message: "Useful link deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting useful link:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };

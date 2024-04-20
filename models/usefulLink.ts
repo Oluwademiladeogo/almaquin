@@ -1,7 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export interface IUsefulLink extends Document {
-  links: Map<string, string>; 
+  links: Map<string, string>;
 }
 
 const UsefulLinkSchema = new mongoose.Schema<IUsefulLink>({
@@ -12,4 +12,7 @@ const UsefulLinkSchema = new mongoose.Schema<IUsefulLink>({
   },
 });
 
-export const UsefulLink = mongoose.model<IUsefulLink>("UsefulLink", UsefulLinkSchema);
+export const UsefulLink = mongoose.model<IUsefulLink>(
+  "UsefulLink",
+  UsefulLinkSchema
+);

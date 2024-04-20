@@ -17,7 +17,7 @@ export const getFAQs = async (req: Request, res: Response) => {
     const formattedFAQs = {
       schoolsFAQs,
       undergraduateFAQs,
-      postgraduateFAQs
+      postgraduateFAQs,
     };
 
     res.status(200).json(formattedFAQs);
@@ -29,9 +29,15 @@ export const getFAQs = async (req: Request, res: Response) => {
 
 export const addFAQs = async (req: Request, res: Response) => {
   try {
-    const { university, schoolsFAQs, undergraduateFAQs, postgraduateFAQs } = req.body;
+    const { university, schoolsFAQs, undergraduateFAQs, postgraduateFAQs } =
+      req.body;
 
-    const newFAQ = new FAQ({ university, schoolsFAQs, undergraduateFAQs, postgraduateFAQs });
+    const newFAQ = new FAQ({
+      university,
+      schoolsFAQs,
+      undergraduateFAQs,
+      postgraduateFAQs,
+    });
     await newFAQ.save();
 
     res.status(201).json({ message: "FAQs added successfully" });
@@ -43,9 +49,14 @@ export const addFAQs = async (req: Request, res: Response) => {
 
 export const updateFAQs = async (req: Request, res: Response) => {
   try {
-    const { university, schoolsFAQs, undergraduateFAQs, postgraduateFAQs } = req.body;
+    const { university, schoolsFAQs, undergraduateFAQs, postgraduateFAQs } =
+      req.body;
 
-    const updatedFAQ = await FAQ.findOneAndUpdate({ university }, { schoolsFAQs, undergraduateFAQs, postgraduateFAQs }, { new: true });
+    const updatedFAQ = await FAQ.findOneAndUpdate(
+      { university },
+      { schoolsFAQs, undergraduateFAQs, postgraduateFAQs },
+      { new: true }
+    );
 
     if (!updatedFAQ) {
       return res.status(404).json({ error: "FAQs not found" });
@@ -54,6 +65,25 @@ export const updateFAQs = async (req: Request, res: Response) => {
     res.status(200).json({ message: "FAQs updated successfully" });
   } catch (error) {
     console.error("Error updating FAQs:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const deleteFAQs = async (req: Request, res: Response) => {
+  try {
+    const universityName = (req.query.university as string).trim();
+
+    const deletedFAQ = await FAQ.findOneAndDelete({
+      university: universityName,
+    });
+
+    if (!deletedFAQ) {
+      return res.status(404).json({ error: "FAQs not found" });
+    }
+
+    res.status(200).json({ message: "FAQs deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting FAQs:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

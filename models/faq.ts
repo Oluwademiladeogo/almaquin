@@ -1,28 +1,23 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-interface IFAQ {
-  university: string;
-  schoolsFAQs: { [question: string]: string };
+interface IFAQ extends Document {
   undergraduateFAQs: { [question: string]: string };
   postgraduateFAQs: { [question: string]: string };
+  schoolsFAQs: { [question: string]: string };
 }
 
 const FAQSchema: Schema<IFAQ> = new Schema<IFAQ>({
-  university: {
-    type: String,
-    required: true,
-  },
-  schoolsFAQs: {
-    type: Map,
-    of: String,
-    default: {},
-  },
   undergraduateFAQs: {
     type: Map,
     of: String,
     default: {},
   },
   postgraduateFAQs: {
+    type: Map,
+    of: String,
+    default: {},
+  },
+  schoolsFAQs: {
     type: Map,
     of: String,
     default: {},

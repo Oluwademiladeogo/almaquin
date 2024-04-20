@@ -1,40 +1,68 @@
-import mongoose from "mongoose";
-import { IUserDoc } from "../types/types";
+import mongoose, { Document } from "mongoose";
+
+export interface IUserDoc extends Document {
+  username: string;
+  email: string;
+  phone_no: string;
+  password: string;
+  role: string;
+  surname: string;
+  firstName: string;
+  birthday: Date;
+  presentSchool: string;
+  classLevel: string;
+  reasonForJoining: string;
+}
 
 export const User = mongoose.model<IUserDoc>(
   "Users",
   new mongoose.Schema<IUserDoc>({
     username: {
-      //Will be a combination of first and last name
       type: String,
-      minlength: 2,
-      maxlength: 255,
       required: true,
     },
     email: {
       type: String,
-      minlength: 5,
-      maxlength: 255,
       required: true,
       unique: true,
     },
     phone_no: {
       type: String,
-      minlength: 7,
-      maxlength: 15,
       required: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
-      minlength: 8,
-      maxlength: 255,
     },
     role: {
       type: String,
       enum: ["User", "Admin"],
       default: "User",
     },
+    surname: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    birthday: {
+      type: Date,
+      required: true,
+    },
+    presentSchool: {
+      type: String,
+      required: true,
+    },
+    classLevel: {
+      type: String,
+      required: true,
+    },
+    reasonForJoining: {
+      type: String,
+      required: true,
+    }
   })
 );

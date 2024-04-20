@@ -14,3 +14,25 @@ export const addUsefulLinks = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const updateUsefulLinks = async (req: Request, res: Response) => {
+    try {
+      const { links } = req.body;
+  
+      const updatedUsefulLink = await UsefulLink.findOneAndUpdate(
+        {},
+        { links },
+        { new: true }
+      );
+  
+      if (!updatedUsefulLink) {
+        return res.status(404).json({ error: "Useful links not found" });
+      }
+  
+      res.status(200).json({ message: "Useful links updated successfully" });
+    } catch (error) {
+      console.error("Error updating useful links:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  

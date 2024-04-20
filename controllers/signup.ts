@@ -34,9 +34,6 @@ export const signupController = async (
     email: email,
     phone_no: phoneNo,
     password: hashedPassword,
-    role: "User",
-    // Add other details to the user object
-    // Ensure that the field names match your model
     surname: surname,
     firstName: firstName,
     birthday: birthday,

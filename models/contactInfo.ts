@@ -1,13 +1,12 @@
-// Contact Model (models/contact.ts)
 import mongoose, { Schema } from "mongoose";
 
-interface IContact {
+interface IContactInfo {
   phone: string;
   email: string;
   fax: string;
 }
 
-const ContactSchema: Schema<IContact> = new Schema<IContact>({
+const ContactInfoSchema: Schema<IContactInfo> = new Schema<IContactInfo>({
   phone: {
     type: String,
     required: true,
@@ -22,5 +21,5 @@ const ContactSchema: Schema<IContact> = new Schema<IContact>({
   },
 });
 
-export const Contact = mongoose.model<IContact>("Contact", ContactSchema);
+export const ContactInfo = mongoose.model<IContactInfo>("Contact", ContactInfoSchema);
 

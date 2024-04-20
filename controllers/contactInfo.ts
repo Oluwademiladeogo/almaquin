@@ -13,3 +13,18 @@ export const getContactInfo = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+export const addContactInfo = async (req: Request, res: Response) => {
+  try {
+    const { phone, email, fax } = req.body;
+
+    const newContact = new Contact({ phone, email, fax });
+    await newContact.save();
+
+    res.status(201).json({ message: "Contact information added successfully" });
+  } catch (error) {
+    console.error("Error adding contact information:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

@@ -21,5 +21,7 @@ const ContactInfoSchema: Schema<IContactInfo> = new Schema<IContactInfo>({
   },
 });
 
-export const ContactInfo = mongoose.model<IContactInfo>("Contact", ContactInfoSchema);
-
+export const ContactInfo = mongoose.model<IContactInfo>(
+  "Contact",
+  ContactInfoSchema
+);

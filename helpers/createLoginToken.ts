@@ -18,7 +18,8 @@ export const createLoginToken = async (data: loginUserDto): Promise<any> => {
 
     const isValid = await bcrypt.compare(password, user.password);
 
-    if (!isValid) return { status: 401, message: "Incorrect email or password" };
+    if (!isValid)
+      return { status: 401, message: "Incorrect email or password" };
 
     const payload: JwtPayload = {
       id: user._id,

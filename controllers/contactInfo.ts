@@ -14,7 +14,6 @@ export const getContactInfo = async (req: Request, res: Response) => {
   }
 };
 
-
 export const addContactInfo = async (req: Request, res: Response) => {
   try {
     const { phone, email, fax } = req.body;
@@ -33,13 +32,19 @@ export const updateContactInfo = async (req: Request, res: Response) => {
   try {
     const { phone, email, fax } = req.body;
 
-    const updatedContact = await ContactInfo.findOneAndUpdate({}, { phone, email, fax }, { new: true });
+    const updatedContact = await ContactInfo.findOneAndUpdate(
+      {},
+      { phone, email, fax },
+      { new: true }
+    );
 
     if (!updatedContact) {
       return res.status(404).json({ error: "Contact information not found" });
     }
 
-    res.status(200).json({ message: "Contact information updated successfully" });
+    res
+      .status(200)
+      .json({ message: "Contact information updated successfully" });
   } catch (error) {
     console.error("Error updating contact information:", error);
     res.status(500).json({ error: "Internal Server Error" });

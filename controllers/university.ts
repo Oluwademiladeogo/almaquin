@@ -44,7 +44,6 @@ export const getUniversityByName = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getAllUniversityDetails = async (req: Request, res: Response) => {
   try {
     const universityName = (req.query.university as string).trim();
@@ -65,10 +64,16 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
       programs: academic.programs.map(program => program.name),
     }));
 
+    const schoolsPrograms = university.schools.map(academic => ({
+      academicName: academic.name,
+      programs: academic.programs.map(program => program.name),
+    }));
+
     const universityData = {
       name: university.name,
       undergraduatePrograms,
-      postgraduatePrograms
+      postgraduatePrograms,
+      schoolsPrograms 
     };
 
     res.status(200).json(universityData);
@@ -77,6 +82,8 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
 export const updateUniversityById = async (req: Request, res: Response) => {
   try {
     const university = await University.findByIdAndUpdate(

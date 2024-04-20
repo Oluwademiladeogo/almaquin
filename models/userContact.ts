@@ -20,4 +20,7 @@ const UserContactSchema: Schema<IUserContact> = new Schema<IUserContact>({
     required: true,
   },
 });
-export const UserContact = mongoose.model<IUserContact>("UserContact", UserContactSchema);
+export const UserContact = mongoose.model<IUserContact>(
+  "UserContact",
+  UserContactSchema
+);

@@ -9,28 +9,34 @@ export const createLoginToken = async (data: loginUserDto): Promise<any> => {
   const { error } = validate(data);
   if (error) return { status: 400, message: error.details[0].message };
 
-  let { email, password } = data;
+  const { email, password } = data;
 
-  let user = await User.findOne({ email: email });
+  try {
+    const user = await User.findOne({ email: email });
 
-  if (!user) return { status: 401, message: "Incorrect email or password" };
+    if (!user) return { status: 401, message: "Incorrect email or password" };
 
-  const isValid = await bcrypt.compare(password, user.password);
+    const isValid = await bcrypt.compare(password, user.password);
 
-  if (!isValid) return { status: 400, message: "Incorrect email or password" };
+    if (!isValid) return { status: 401, message: "Incorrect email or password" };
 
-  let payload: JwtPayload = {
-    id: user?._id,
-    name: user?.username,
-    phone: user?.phone_no,
-  };
+    const payload: JwtPayload = {
+      id: user._id,
+      name: user.username,
+      phone: user.phone_no,
+    };
 
-  let secret: string = process.env.JWTKEY || "";
-  let token = jwt.sign(payload, secret);
+    const secret: string = process.env.JWT_KEY || "";
 
-  return {
-    status: 200,
-    message: "Login successful",
-    token: token,
-  };
+    const token = jwt.sign(payload, secret, { expiresIn: "3d" }); // Token expires in 1 hour
+
+    return {
+      status: 200,
+      message: "Login successful",
+      token: token,
+    };
+  } catch (error) {
+    console.error("Error creating login token:", error);
+    return { status: 500, message: "Internal Server Error" };
+  }
 };

@@ -1,10 +1,16 @@
-export interface signupUserDto {
-  username: string;
+export interface SignupUserDto {
+  surname: string;
+  firstName: string;
+  birthday: Date;
+  phoneNo: string;
   email: string;
-  phone_no: string;
+  presentSchool: string;
+  classLevel: string;
+  reasonForJoining: string;
   password: string;
   role: string;
 }
+
 
 export interface loginUserDto {
   email: string;

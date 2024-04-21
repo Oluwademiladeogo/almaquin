@@ -1,5 +1,6 @@
-import { collectUserMessage } from "../controllers/userContact"
+import { collectUserMessage } from "../controllers/userContact";
 
-import {Router} from "express"
-const router = Router()
-router.post("/", collectUserMessage)
+import { Router } from "express";
+const router = Router();
+router.post("/", collectUserMessage);
+export default router;

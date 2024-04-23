@@ -1,5 +1,3 @@
-// models/university.ts
-
 import mongoose, { Schema } from "mongoose";
 import {
   IProgram,

@@ -8,7 +8,7 @@ export const loginController = async (req: Request, res: Response) => {
 
       if (data.token) {
         res
-          .cookie("authToken", data.token, { httpOnly: true, secure: true }) // Set cookie as httpOnly and secure
+          .cookie("authToken", data.token, { httpOnly: true, secure: true }) 
           .status(data.status)
           .json({ message: data.message });
       } else {

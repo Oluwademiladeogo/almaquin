@@ -30,6 +30,7 @@ export interface IPostgraduate {
 
 export interface IUniversityDoc extends Document {
   name: string;
+  shortName: string;
   picture: string;
   websiteLink: string;
   overview: Record<string, string>;

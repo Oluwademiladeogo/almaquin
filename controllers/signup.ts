@@ -7,7 +7,7 @@ export const signupController = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const { error } = validate(req.body);
+  const { error, value } = validate(req.body);
 
   if (error) return res.status(400).json({ message: error.details[0].message });
 
@@ -21,8 +21,8 @@ export const signupController = async (
     classLevel,
     reasonForJoining,
     password,
-  } = req.body;
-
+  } = value;
+  
   let user = await User.findOne({ email: email });
 
   if (user) return res.status(409).json({ message: "User already registered" });
@@ -31,15 +31,15 @@ export const signupController = async (
 
   user = new User({
     username: `${surname} ${firstName}`,
-    email: email,
+    email,
     phone_no: phoneNo,
     password: hashedPassword,
-    surname: surname,
-    firstName: firstName,
-    birthday: birthday,
-    presentSchool: presentSchool,
-    classLevel: classLevel,
-    reasonForJoining: reasonForJoining,
+    surname,
+    firstName,
+    birthday,
+    presentSchool,
+    classLevel,
+    reasonForJoining,
   });
 
   await user.save();

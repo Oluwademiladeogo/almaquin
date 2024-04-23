@@ -1,41 +1,43 @@
 import { Request, Response } from "express";
 import { University } from "../models/university";
-import { IUniversityDoc } from "../types/types";
+import mongoose from "mongoose";
 
 export const createUniversity = async (req: Request, res: Response) => {
   try {
-    const university: IUniversityDoc = await University.create(req.body);
+    await University.create(req.body);
     res.status(201).json({ message: "success" });
   } catch (error) {
     console.error("Error creating university:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-export const getUniversityByName = async (req: Request, res: Response) => {
+
+export const allUniversities = async (_req: Request, res: Response) => {
   try {
-    const universityName = (req.query.university as string).trim();
-    const academicType = (req.query.academicType as string)?.toLowerCase(); // "undergraduate" or "postgraduate"
+    const universities = await University.find();
+    res.status(200).json(universities);
+  } catch (error) {
+    console.error("Error fetching universities:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 
-    const university = await University.findOne({ name: universityName });
+}
 
-    if (!university) {
-      return res.status(404).json({ error: "University not found" });
-    }
+export const getUniversitiesByName = async (req: Request, res: Response) => {
+  // You can also pass in part of the university name to get a list of universities that match the query
+  if (!req.query.name) return res.status(400).json({ error: "University name is required" });
 
-    let programs;
-    if (academicType === "undergraduate") {
-      programs = university.undergraduate;
-    }
-    if (academicType === "schools") {
-      programs = university.schools;
-    } else if (academicType === "postgraduate") {
-      programs = university.postgraduate;
-    } else {
-      // If academicType is not specified or invalid, return all programs
-      programs = university;
-    }
+  try {
+    const universityName = (req.query.name as string).trim();
 
-    res.status(200).json(programs);
+    const universities = await University.find({ 
+      $or: [
+        { name: { $regex: universityName, $options: "i" } },
+        { shortName: { $regex: universityName, $options: "i" } }
+      ]
+    });
+
+    res.status(200).json(universities);
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -43,10 +45,14 @@ export const getUniversityByName = async (req: Request, res: Response) => {
 };
 
 export const getUniversityDescription = async (req: Request, res: Response) => {
-  try {
-    const universityName = (req.query.university as string).trim();
+  const universityId = req.params.universityId;
+  
+  if (!mongoose.isValidObjectId(universityId)) {
+    return res.status(400).json({ error: "Invalid university ID" });
+  }
 
-    const university = await University.findOne({ name: universityName });
+  try {
+    const university = await University.findOne({ _id: universityId });
 
     if (!university) {
       return res.status(404).json({ error: "University not found" });
@@ -67,10 +73,16 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
 };
 
 export const getAllUniversityDetails = async (req: Request, res: Response) => {
-  try {
-    const universityName = (req.query.university as string).trim();
+  
+  const universityId = req.params.universityId;
 
-    const university = await University.findOne({ name: universityName });
+  if (!mongoose.isValidObjectId(universityId)) {
+    return res.status(400).json({ error: "Invalid university ID" });
+  }
+
+  try {
+
+    const university = await University.findOne({ _id: universityId });
 
     if (!university) {
       return res.status(404).json({ error: "University not found" });
@@ -106,6 +118,12 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
 };
 
 export const updateUniversityById = async (req: Request, res: Response) => {
+  const universityId = req.params.id;
+  
+  if (!mongoose.isValidObjectId(universityId)) {
+    return res.status(400).json({ error: "Invalid university ID" });
+  }
+
   try {
     const university = await University.findByIdAndUpdate(
       req.params.id,

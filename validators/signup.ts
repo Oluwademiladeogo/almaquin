@@ -3,7 +3,7 @@ import { SignupUserDto } from "../dto/users";
 const Schema = Joi.object({
   surname: Joi.string().min(2).max(255).required(),
   firstName: Joi.string().min(2).max(255).required(),
-  // birthday: Joi.date().iso().required(),
+  birthday: Joi.date().required(),
   phoneNo: Joi.string().min(7).max(15).required(),
   email: Joi.string().email().min(5).max(255).required(),
   presentSchool: Joi.string().min(2).max(255).required(),

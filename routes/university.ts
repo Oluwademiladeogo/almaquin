@@ -1,17 +1,21 @@
 import { Router } from "express";
+import { authenticateUser, ensureAdmin } from "../middlewares/auth";
 import {
   createUniversity,
   deleteUniversityByName,
-  getUniversityByName,
+  getUniversitiesByName,
   getAllUniversityDetails,
   updateUniversityByName,
   getUniversityDescription,
+  allUniversities,
 } from "../controllers/university";
-import { authenticateUser, ensureAdmin } from "../middlewares/auth";
+
 const router = Router();
-router.get("/overview", authenticateUser, getAllUniversityDetails);
-router.get("/description", authenticateUser, getUniversityDescription);
-router.get("/", authenticateUser, getUniversityByName);
+
+router.get("/all", authenticateUser, allUniversities);
+router.get("/:universityId", authenticateUser, getAllUniversityDetails);
+router.get("/:universityId/description", authenticateUser, getUniversityDescription);
+router.get("/", authenticateUser, getUniversitiesByName);
 router.post("/", ensureAdmin, createUniversity);
 router.put("/", ensureAdmin, updateUniversityByName);
 router.delete("/", ensureAdmin, deleteUniversityByName);

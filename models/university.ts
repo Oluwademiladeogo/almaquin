@@ -45,6 +45,9 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
     required: true,
     unique: true,
   },
+  shortName: {
+    type: String,
+  },
   picture: {
     type: String,
     required: true,

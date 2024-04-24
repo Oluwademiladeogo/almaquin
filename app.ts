@@ -8,6 +8,7 @@ import faqRouter from "./routes/faq";
 import userContactRouter from "./routes/userContact";
 import contactInfoRouter from "./routes/contactInfo";
 import usefulLinksRouter from "./routes/usefulLinks";
+import secSchoolRouter from "./routes/secSchool"
 export const RouteHandler = async (app: Express) => {
   app.use("/api/signup", signupRouter);
   app.use("/api/login", loginRouter);
@@ -18,4 +19,5 @@ export const RouteHandler = async (app: Express) => {
   app.use("/api/send-a-message", userContactRouter);
   app.use("/api/contact", contactInfoRouter);
   app.use("/api/links", usefulLinksRouter);
+  app.use("/api/sec-schools", secSchoolRouter)
 };

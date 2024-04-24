@@ -8,7 +8,7 @@ export const signupController = async (
   res: Response
 ): Promise<any> => {
   const { error, value } = validate(req.body);
-
+console.log(error,value, req.body)
   if (error) return res.status(400).json({ message: error.details[0].message });
 
   let {

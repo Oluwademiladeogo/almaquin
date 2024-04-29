@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint \"src\"",
-    "start": "dotenv -c '.env' -- node dist/app"
+    "start": "dotenv -c '.env' -- node dist/app",
+    "dev": "nodemon"
   },
   "dependencies": {
     "@adminjs/express": "^6.1.0",

@@ -8,10 +8,14 @@ import {
   updateUniversityByName,
   getUniversityDescription,
   allUniversities,
+  getUniversityLinksById,
+  getUniversityFAQById,
 } from "../controllers/university";
 
 const router = Router();
 
+router.get("/:universityId/faq", getUniversityFAQById);
+router.get("/:universityId/links", getUniversityLinksById);
 router.get("/all", authenticateUser, allUniversities);
 router.get("/:universityId", authenticateUser, getAllUniversityDetails);
 router.get("/:universityId/description", authenticateUser, getUniversityDescription);

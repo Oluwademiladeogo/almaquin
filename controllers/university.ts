@@ -15,29 +15,29 @@ export const createUniversity = async (req: Request, res: Response) => {
 export const allUniversities = async (_req: Request, res: Response) => {
   try {
     const universities = await University.find();
-    res.status(200).json({ message: "success", data: universities});
+    res.status(200).json(universities);
   } catch (error) {
     console.error("Error fetching universities:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-
-}
+};
 
 export const getUniversitiesByName = async (req: Request, res: Response) => {
   // You can also pass in part of the university name to get a list of universities that match the query
-  if (!req.query.name) return res.status(400).json({ error: "University name is required" });
+  if (!req.query.name)
+    return res.status(400).json({ error: "University name is required" });
 
   try {
     const universityName = (req.query.name as string).trim();
 
-    const universities = await University.find({ 
+    const universities = await University.find({
       $or: [
         { name: { $regex: universityName, $options: "i" } },
-        { shortName: { $regex: universityName, $options: "i" } }
-      ]
+        { shortName: { $regex: universityName, $options: "i" } },
+      ],
     });
 
-    res.status(200).json({ message: "success", data: universities });
+    res.status(200).json(universities);
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -46,7 +46,7 @@ export const getUniversitiesByName = async (req: Request, res: Response) => {
 
 export const getUniversityDescription = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
-  
+
   if (!mongoose.isValidObjectId(universityId)) {
     return res.status(400).json({ error: "Invalid university ID" });
   }
@@ -65,7 +65,7 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
       overview: university.overview,
     };
 
-    res.status(200).json({ message: "success", data: universityDescription });
+    res.status(200).json(universityDescription);
   } catch (error) {
     console.error("Error fetching university description:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -73,7 +73,6 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
 };
 
 export const getAllUniversityDetails = async (req: Request, res: Response) => {
-  
   const universityId = req.params.universityId;
 
   if (!mongoose.isValidObjectId(universityId)) {
@@ -81,7 +80,6 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
   }
 
   try {
-
     const university = await University.findOne({ _id: universityId });
 
     if (!university) {
@@ -110,7 +108,7 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
       schoolsPrograms,
     };
 
-    res.status(200).json({ message: "success", data: universityData });
+    res.status(200).json(universityData);
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -119,7 +117,7 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
 
 export const updateUniversityById = async (req: Request, res: Response) => {
   const universityId = req.params.id;
-  
+
   if (!mongoose.isValidObjectId(universityId)) {
     return res.status(400).json({ error: "Invalid university ID" });
   }
@@ -191,6 +189,44 @@ export const deleteUniversityByName = async (req: Request, res: Response) => {
     res.status(204).end();
   } catch (error) {
     console.error("Error deleting university:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getUniversityFAQById = async (req: Request, res: Response) => {
+  const universityId = req.params.universityId;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    const faq = university.faq;
+
+    res.status(200).json({ message:"success", university: university.name, faq });
+  } catch (error) {
+    console.error("Error fetching university FAQ:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getUniversityLinksById = async (req: Request, res: Response) => {
+  const universityId = req.params.universityId;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    const relevantLinks = university.relevantLinks;
+
+    res.status(200).json({ message:"success", university: university.name, relevantLinks });
+  } catch (error) {
+    console.error("Error fetching university links:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

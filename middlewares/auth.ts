@@ -14,14 +14,17 @@ export const authenticateUser = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies?.authToken;
 
-  if (!token) {
+  if (!req.headers.authorization) {
     return res.status(401).json({ message: "Unauthorized: No token provided" });
   }
+  
+  const token = decodeURIComponent(req.headers.authorization);
+  const tokenString = token.split(" ")[1];
+
 
   try {
-    const decoded = jwt.verify(token, process.env.JWTKEY || "") as JwtPayload;
+    const decoded = jwt.verify(tokenString, process.env.JWTKEY || "") as JwtPayload;
     req.user = decoded;
     next();
   } catch (error) {
@@ -29,18 +32,19 @@ export const authenticateUser = (
   }
 };
 export const ensureAdmin = async (
-  req: Request,
+  req: Request, 
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies?.authToken;
-
-  if (!token) {
+  if (!req.headers.authorization) {
     return res.status(401).json({ message: "Unauthorized: No token provided" });
   }
+  
+  const token = decodeURIComponent(req.headers.authorization);
+  const tokenString = token.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWTKEY || "") as JwtPayload;
+    const decoded = jwt.verify(tokenString, process.env.JWTKEY || "") as JwtPayload;
     const user = await User.findById(decoded.id);
     if (!user || user.role !== "Admin") {
       return res

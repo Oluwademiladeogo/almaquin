@@ -15,7 +15,7 @@ export const createUniversity = async (req: Request, res: Response) => {
 export const allUniversities = async (_req: Request, res: Response) => {
   try {
     const universities = await University.find();
-    res.status(200).json(universities);
+    res.status(200).json({ message: "success", data: universities});
   } catch (error) {
     console.error("Error fetching universities:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -37,7 +37,7 @@ export const getUniversitiesByName = async (req: Request, res: Response) => {
       ]
     });
 
-    res.status(200).json(universities);
+    res.status(200).json({ message: "success", data: universities });
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -65,7 +65,7 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
       overview: university.overview,
     };
 
-    res.status(200).json(universityDescription);
+    res.status(200).json({ message: "success", data: universityDescription });
   } catch (error) {
     console.error("Error fetching university description:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -110,7 +110,7 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
       schoolsPrograms,
     };
 
-    res.status(200).json(universityData);
+    res.status(200).json({ message: "success", data: universityData });
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -7,7 +7,7 @@ import {
   getAllUniversityDetails,
   updateUniversityByName,
   getUniversityDescription,
-  allUniversities,
+  getAllUniversities,
   getUniversityLinksById,
   getUniversityFAQById,
 } from "../controllers/university";
@@ -16,7 +16,7 @@ const router = Router();
 
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", getUniversityLinksById);
-router.get("/all", authenticateUser, allUniversities);
+router.get("/all", authenticateUser, getAllUniversities);
 router.get("/:universityId", authenticateUser, getAllUniversityDetails);
 router.get("/:universityId/description", authenticateUser, getUniversityDescription);
 router.get("/", authenticateUser, getUniversitiesByName);

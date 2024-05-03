@@ -19,8 +19,8 @@ export const createSchool = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    const { name } = req.body;
-    const newSchool: School = new SchoolModel({ name });
+    const { name, location } = req.body;
+    const newSchool: School = new SchoolModel({ name, location });
     await newSchool.save();
     res.status(201).json({ message: 'School created successfully', school: newSchool });
   } catch (error) {

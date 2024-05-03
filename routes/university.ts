@@ -16,10 +16,10 @@ const router = Router();
 
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", getUniversityLinksById);
-router.get("/all", authenticateUser, allUniversities);
-router.get("/:universityId", authenticateUser, getAllUniversityDetails);
-router.get("/:universityId/description", authenticateUser, getUniversityDescription);
-router.get("/", authenticateUser, getUniversitiesByName);
+router.get("/all", allUniversities);
+router.get("/:universityId", getAllUniversityDetails);
+router.get("/:universityId/description", getUniversityDescription);
+router.get("/", getUniversitiesByName);
 router.post("/", ensureAdmin, createUniversity);
 router.put("/", ensureAdmin, updateUniversityByName);
 router.delete("/", ensureAdmin, deleteUniversityByName);

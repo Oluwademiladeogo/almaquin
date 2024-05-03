@@ -16,7 +16,7 @@ const router = Router();
 
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", getUniversityLinksById);
-router.get("/all", allUniversities);
+router.get("/all", getAllUniversities);
 router.get("/:universityId", getAllUniversityDetails);
 router.get("/:universityId/description", getUniversityDescription);
 router.get("/", getUniversitiesByName);

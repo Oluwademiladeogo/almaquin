@@ -7,7 +7,7 @@ import {
   getAllUniversityDetails,
   updateUniversityByName,
   getUniversityDescription,
-  allUniversities,
+  getAllUniversities,
   getUniversityLinksById,
   getUniversityFAQById,
 } from "../controllers/university";

@@ -12,7 +12,7 @@ export const createUniversity = async (req: Request, res: Response) => {
   }
 };
 
-export const allUniversities = async (_req: Request, res: Response) => {
+export const getAllUniversities = async (_req: Request, res: Response) => {
   try {
     const universities = await University.find();
     res.status(200).json(universities);

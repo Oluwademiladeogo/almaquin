@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 // app.use(cors(corsOptions));
 app.use(cors());
-process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
+// process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
 RouteHandler(app);
 
 const port = process.env.PORT || 3000;

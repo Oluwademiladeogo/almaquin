@@ -1,11 +1,26 @@
 import { Request, Response } from "express";
 import { University } from "../models/university";
 import mongoose from "mongoose";
+import { UniversitySchema } from "../validators/university";
 
-export const createUniversity = async (req: Request, res: Response) => {
+export const createUniversity = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    await University.create(req.body);
-    res.status(201).json({ message: "success" });
+    const { error } = UniversitySchema.validate(req.body);
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+      return;
+    }
+
+    const newUniversity = await University.create(req.body);
+    res
+      .status(201)
+      .json({
+        message: "University created successfully",
+        university: newUniversity,
+      });
   } catch (error) {
     console.error("Error creating university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -123,6 +138,12 @@ export const updateUniversityById = async (req: Request, res: Response) => {
   }
 
   try {
+    const { error } = UniversitySchema.validate(req.body);
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+      return;
+    }
+
     const university = await University.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -143,6 +164,13 @@ export const updateUniversityById = async (req: Request, res: Response) => {
 export const updateUniversityByName = async (req: Request, res: Response) => {
   try {
     const universityName = req.query.university as string;
+    const { error } = UniversitySchema.validate(req.body);
+    
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+      return;
+    }
+
     const university = await University.findOneAndUpdate(
       { name: universityName },
       req.body,
@@ -205,7 +233,9 @@ export const getUniversityFAQById = async (req: Request, res: Response) => {
 
     const faq = university.faq;
 
-    res.status(200).json({ message:"success", university: university.name, faq });
+    res
+      .status(200)
+      .json({ message: "success", university: university.name, faq });
   } catch (error) {
     console.error("Error fetching university FAQ:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -224,7 +254,9 @@ export const getUniversityLinksById = async (req: Request, res: Response) => {
 
     const relevantLinks = university.relevantLinks;
 
-    res.status(200).json({ message:"success", university: university.name, relevantLinks });
+    res
+      .status(200)
+      .json({ message: "success", university: university.name, relevantLinks });
   } catch (error) {
     console.error("Error fetching university links:", error);
     res.status(500).json({ error: "Internal Server Error" });

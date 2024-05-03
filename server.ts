@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
 import { corsOptions } from "./startup/cors";
+import errorHandler from "./middlewares/error";
 
 const app = express();
 config();
@@ -18,7 +19,7 @@ app.use(cookieParser());
 app.use(cors());
 // process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
 RouteHandler(app);
-
+app.use(errorHandler)
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

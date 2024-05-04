@@ -20,8 +20,8 @@ router.get("/all", getAllUniversities);
 router.get("/:universityId", getAllUniversityDetails);
 router.get("/:universityId/description", getUniversityDescription);
 router.get("/", getUniversitiesByName);
-router.post("/", createUniversity);
-router.put("/", updateUniversityByName);
+router.post("/",ensureAdmin, createUniversity);
+router.put("/", ensureAdmin, updateUniversityByName);
 router.delete("/", ensureAdmin, deleteUniversityByName);
 
 export default router;

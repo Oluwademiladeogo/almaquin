@@ -31,28 +31,31 @@ export const authenticateUser = (
     return res.status(401).json({ message: "Unauthorized: Invalid token" });
   }
 };
+
+
 export const ensureAdmin = async (
   req: Request, 
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.headers.authorization) {
-    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  const authorization = req.headers.authorization;
+
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized: No token provided or incorrect format" });
   }
-  
-  const token = decodeURIComponent(req.headers.authorization);
-  const tokenString = token.split(" ")[1];
+
+  const tokenString = authorization.split(" ")[1];
 
   try {
     const decoded = jwt.verify(tokenString, process.env.JWTKEY || "") as JwtPayload;
     const user = await User.findById(decoded.id);
+
     if (!user || user.role !== "Admin") {
-      return res
-        .status(403)
-        .json({ message: "Forbidden: Admin access required" });
+      return res.status(403).json({ message: "Forbidden: Admin access required" });
     }
+
     next();
   } catch (error) {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(401).json({ message: "Unauthorized: Invalid token or server error" });
   }
 };

@@ -10,6 +10,7 @@ import {
   getAllUniversities,
   getUniversityLinksById,
   getUniversityFAQById,
+  getUniversityNames,
 } from "../controllers/university";
 
 const router = Router();
@@ -17,6 +18,7 @@ const router = Router();
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", getUniversityLinksById);
 router.get("/all", getAllUniversities);
+router.get("/search", getUniversityNames)
 router.get("/:universityId", getAllUniversityDetails);
 router.get("/:universityId/description", getUniversityDescription);
 router.get("/", getUniversitiesByName);

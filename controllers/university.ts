@@ -59,6 +59,18 @@ export const getUniversitiesByName = async (req: Request, res: Response) => {
   }
 };
 
+export const getUniversityNames = async (req: Request, res: Response) => {
+  try {
+    const universities = await University.find({}, { name: 1, _id: 0 });
+
+    res.status(200).json(universities);
+  } catch (error) {
+    console.error("Error fetching university names:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 export const getUniversityDescription = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 

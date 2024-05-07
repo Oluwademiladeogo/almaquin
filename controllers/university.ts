@@ -15,12 +15,10 @@ export const createUniversity = async (
     }
 
     const newUniversity = await University.create(req.body);
-    res
-      .status(201)
-      .json({
-        message: "University created successfully",
-        university: newUniversity,
-      });
+    res.status(201).json({
+      message: "University created successfully",
+      university: newUniversity,
+    });
   } catch (error) {
     console.error("Error creating university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -37,7 +35,7 @@ export const getAllUniversities = async (_req: Request, res: Response) => {
   }
 };
 
-export const getUniversitiesByName = async (req: Request, res: Response) => {
+export const searchUniversitiesByName = async (req: Request, res: Response) => {
   // You can also pass in part of the university name to get a list of universities that match the query
   if (!req.query.name)
     return res.status(400).json({ error: "University name is required" });
@@ -70,7 +68,6 @@ export const getUniversityNames = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getUniversityDescription = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 
@@ -99,7 +96,7 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllUniversityDetails = async (req: Request, res: Response) => {
+export const getUniversitybyId = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 
   if (!mongoose.isValidObjectId(universityId)) {
@@ -113,29 +110,7 @@ export const getAllUniversityDetails = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "University not found" });
     }
 
-    const undergraduatePrograms = university.undergraduate.map((academic) => ({
-      academicName: academic.name,
-      programs: academic.programs.map((program) => program.name),
-    }));
-
-    const postgraduatePrograms = university.postgraduate.map((academic) => ({
-      academicName: academic.name,
-      programs: academic.programs.map((program) => program.name),
-    }));
-
-    const schoolsPrograms = university.schools.map((academic) => ({
-      academicName: academic.name,
-      programs: academic.programs.map((program) => program.name),
-    }));
-
-    const universityData = {
-      name: university.name,
-      undergraduatePrograms,
-      postgraduatePrograms,
-      schoolsPrograms,
-    };
-
-    res.status(200).json(universityData);
+    res.status(200).json({ message: "success", university });
   } catch (error) {
     console.error("Error fetching university:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -177,7 +152,7 @@ export const updateUniversityByName = async (req: Request, res: Response) => {
   try {
     const universityName = req.query.university as string;
     const { error } = UniversitySchema.validate(req.body);
-    
+
     if (error) {
       res.status(400).json({ error: error.details[0].message });
       return;

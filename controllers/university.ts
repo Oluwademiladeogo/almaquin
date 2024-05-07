@@ -84,9 +84,11 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
 
     const universityDescription = {
       name: university.name,
+      shortName: university.shortName || "",
       picture: university.picture,
       websiteLink: university.websiteLink,
       overview: university.overview,
+      faq: university.faq
     };
 
     res.status(200).json(universityDescription);

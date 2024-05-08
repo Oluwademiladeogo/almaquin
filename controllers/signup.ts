@@ -29,7 +29,6 @@ export const signupController = async (
   const { hashedPassword } = await getHashedPassword(password);
 
   user = new User({
-    username: `${surname} ${firstName}`,
     email,
     phone_no: phoneNo,
     password: hashedPassword,

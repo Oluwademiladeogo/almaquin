@@ -76,19 +76,22 @@ export const getUniversityDescription = async (req: Request, res: Response) => {
   }
 
   try {
-    const university = await University.findOne({ _id: universityId });
-
+    const university = await University.findOne({ _id: universityId }).populate(
+      "schools"
+    );
     if (!university) {
       return res.status(404).json({ error: "University not found" });
     }
 
+    const schoolNames = university.schools.map((school) => school.name);
     const universityDescription = {
       name: university.name,
       shortName: university.shortName || "",
       picture: university.picture,
       websiteLink: university.websiteLink,
       overview: university.overview,
-      faq: university.faq
+      faq: university.faq,
+      schoolNames: schoolNames,
     };
 
     res.status(200).json(universityDescription);
@@ -251,3 +254,23 @@ export const getUniversityLinksById = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const getUniversitySchoolNames = async (req: Request, res: Response) => {
+  const universityId = req.params.universityId;
+
+  try {
+    const university = await University.findById(universityId).select(
+      "schools.name -_id"
+    );
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    const schoolNames = university.schools.map((school) => school.name);
+    res.status(200).json(schoolNames);
+  } catch (error) {
+    console.error("Error fetching school names:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+

@@ -11,12 +11,15 @@ import {
   getUniversityNames,
   getUniversitybyId,
   searchUniversitiesByName,
+  getUniversitySchoolNames,
 } from "../controllers/university";
 
 const router = Router();
 
 router.get("/all", getAllUniversities);
 router.get("/search", getUniversityNames);
+// router.get("/type/:type", getUniversitiesByProgramType);
+router.get("/:universityId/schools", getUniversitySchoolNames);
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", getUniversityLinksById);
 router.get("/:universityId", getUniversitybyId);

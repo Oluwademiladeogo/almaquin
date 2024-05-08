@@ -19,6 +19,7 @@ export const signupController = async (
     presentSchool,
     classLevel,
     reasonForJoining,
+    schoolLocation,
     password,
   } = value;
 
@@ -36,6 +37,7 @@ export const signupController = async (
     firstName,
     birthday,
     presentSchool,
+    schoolLocation,
     classLevel,
     reasonForJoining,
   });

@@ -1,7 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
 export interface IUserDoc extends Document {
-  username: string;
   email: string;
   phone_no: string;
   password: string;
@@ -10,6 +9,7 @@ export interface IUserDoc extends Document {
   firstName: string;
   birthday: Date;
   presentSchool: string;
+  schoolLocation: string;
   classLevel: string;
   reasonForJoining: string;
 }
@@ -52,6 +52,10 @@ export const User = mongoose.model<IUserDoc>(
       type: String,
       required: true,
     },
+    schoolLocation: {
+      type: String,
+      required: true,
+    },
     classLevel: {
       type: String,
       required: true,
@@ -59,6 +63,6 @@ export const User = mongoose.model<IUserDoc>(
     reasonForJoining: {
       type: String,
       required: true,
-    }
+    },
   })
 );

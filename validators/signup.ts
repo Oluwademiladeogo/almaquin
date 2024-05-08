@@ -7,6 +7,7 @@ const Schema = Joi.object({
   phoneNo: Joi.string().min(7).max(15).required(),
   email: Joi.string().email().min(5).max(255).required(),
   presentSchool: Joi.string().min(2).max(255).required(),
+  schoolLocation: Joi.string().min(2).max(255).required(),
   classLevel: Joi.string().min(1).max(50).required(),
   reasonForJoining: Joi.string().min(2).max(255).required(),
   password: Joi.string().min(8).max(255).required(),

@@ -274,3 +274,136 @@ export const getUniversitySchoolNames = async (req: Request, res: Response) => {
   }
 };
 
+
+export const getUniversityByProgramType = async (req: Request, res: Response) => {
+  const { universityId, type } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    let programs = [];
+
+    switch (type) {
+      case 'undergraduate':
+        programs = university.undergraduate;
+        break;
+      case 'postgraduate':
+        programs = university.postgraduate;
+        break;
+      default:
+        return res.status(400).json({ message: 'Invalid program type' });
+    }
+
+    res.json(programs);
+  } catch (error) {
+    console.error('Error fetching university by program type:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+export const getUniversityFluidStudents = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ fluidStudents: university.fluidStudents });
+  } catch (error) {
+    console.error('Error fetching fluid students:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getUniversityExams = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ exams: university.exams });
+  } catch (error) {
+    console.error('Error fetching exams:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getUniversityFees = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ fees: university.fees });
+  } catch (error) {
+    console.error('Error fetching fees:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getUniversityDates = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ dates: university.dates });
+  } catch (error) {
+    console.error('Error fetching dates:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getUniversityAdmissions = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ admissions: university.admissions });
+  } catch (error) {
+    console.error('Error fetching admissions:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getUniversityDocuments = async (req: Request, res: Response) => {
+  const { universityId } = req.params;
+
+  try {
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ message: 'University not found' });
+    }
+
+    res.json({ documents: university.documents });
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

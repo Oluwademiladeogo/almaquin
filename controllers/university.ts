@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { University } from "../models/university";
 import mongoose from "mongoose";
 import { UniversitySchema } from "../validators/university";
+import { IPostgraduate, IUndergraduate } from "../types";
 
 export const createUniversity = async (
   req: Request,
@@ -306,8 +307,8 @@ export const getUniversityByProgramType = async (req: Request, res: Response) =>
 };
 
 
-export const getUniversityFluidStudents = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
+export const getFieldByType = async (req: Request, res: Response) => {
+  const { universityId, type, field } = req.params;
 
   try {
     const university = await University.findById(universityId);
@@ -316,94 +317,24 @@ export const getUniversityFluidStudents = async (req: Request, res: Response) =>
       return res.status(404).json({ message: 'University not found' });
     }
 
-    res.json({ fluidStudents: university.fluidStudents });
-  } catch (error) {
-    console.error('Error fetching fluid students:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getUniversityExams = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
-
-  try {
-    const university = await University.findById(universityId);
-
-    if (!university) {
-      return res.status(404).json({ message: 'University not found' });
+    if (type !== 'undergraduate' && type !== 'postgraduate') {
+      return res.status(400).json({ message: 'Invalid type' });
     }
 
-    res.json({ exams: university.exams });
-  } catch (error) {
-    console.error('Error fetching exams:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getUniversityFees = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
-
-  try {
-    const university = await University.findById(universityId);
-
-    if (!university) {
-      return res.status(404).json({ message: 'University not found' });
+    const fieldType = university[type] as IUndergraduate[] | IPostgraduate[];
+    if (!fieldType) {
+      return res.status(404).json({ message: `${type} not found` });
     }
 
-    res.json({ fees: university.fees });
-  } catch (error) {
-    console.error('Error fetching fees:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getUniversityDates = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
-
-  try {
-    const university = await University.findById(universityId);
-
-    if (!university) {
-      return res.status(404).json({ message: 'University not found' });
+    // Check if the specified field exists in the type (Undergraduate/Postgraduate)
+    const fieldData = fieldType[0][field as keyof (IPostgraduate | IUndergraduate)];
+    if (!fieldData) {
+      return res.status(404).json({ message: `${field} not found in ${type}` });
     }
 
-    res.json({ dates: university.dates });
+    res.json({ [field]: fieldData });
   } catch (error) {
-    console.error('Error fetching dates:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getUniversityAdmissions = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
-
-  try {
-    const university = await University.findById(universityId);
-
-    if (!university) {
-      return res.status(404).json({ message: 'University not found' });
-    }
-
-    res.json({ admissions: university.admissions });
-  } catch (error) {
-    console.error('Error fetching admissions:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getUniversityDocuments = async (req: Request, res: Response) => {
-  const { universityId } = req.params;
-
-  try {
-    const university = await University.findById(universityId);
-
-    if (!university) {
-      return res.status(404).json({ message: 'University not found' });
-    }
-
-    res.json({ documents: university.documents });
-  } catch (error) {
-    console.error('Error fetching documents:', error);
+    console.error(`Error fetching ${field} for ${type} from university ${universityId}:`, error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

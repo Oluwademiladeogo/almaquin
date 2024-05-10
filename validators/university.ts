@@ -13,11 +13,23 @@ const AcademicSchema = Joi.object({
 const UndergraduateSchema = Joi.object({
   name: Joi.string().required(),
   programs: Joi.array().items(ProgramSchema).required(),
+  fluidStudents: Joi.string().required(),
+  exams: Joi.string().required(),
+  fees: Joi.string().required(),
+  dates: Joi.string().required(),
+  admissions: Joi.string().required(),
+  documents: Joi.string().required(),
 });
 
 const PostgraduateSchema = Joi.object({
   name: Joi.string().required(),
   programs: Joi.array().items(ProgramSchema).required(),
+  fluidStudents: Joi.string().required(),
+  exams: Joi.string().required(),
+  fees: Joi.string().required(),
+  dates: Joi.string().required(),
+  admissions: Joi.string().required(),
+  documents: Joi.string().required(),
 });
 
 const OverviewSchema = Joi.object({
@@ -46,10 +58,4 @@ export const UniversitySchema = Joi.object({
   postgraduate: Joi.array().items(PostgraduateSchema).required(),
   relevantLinks: Joi.array().items(RelevantLinksSchema),
   faq: Joi.array().items(FAQSchema),
-  fluidStudents: Joi.string().required(),
-  exams: Joi.string().required(),
-  fees: Joi.string().required(),
-  dates: Joi.string().required(),
-  admissions: Joi.string().required(),
-  documents: Joi.string().required(),
 });

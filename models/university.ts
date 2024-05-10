@@ -40,6 +40,12 @@ interface IUniversityDoc extends Document {
     question: string;
     answer: string;
   }[];
+  fluidStudents: string;
+  exams: string;
+  fees: string;
+  dates: string;
+  admissions: string;
+  documents: string;
 }
 
 const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
@@ -131,6 +137,30 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
       required: true,
     },
   }],
+  fluidStudents: {
+    type: String,
+    required: true,
+  },
+  exams: {
+    type: String,
+    required: true,
+  },
+  fees: {
+    type: String,
+    required: true,
+  },
+  dates: {
+    type: String,
+    required: true,
+  },
+  admissions: {
+    type: String,
+    required: true,
+  },
+  documents: {
+    type: String,
+    required: true,
+  },
 });
 
 export const University = mongoose.model<IUniversityDoc>(

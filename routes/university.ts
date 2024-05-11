@@ -2,8 +2,6 @@ import { Router } from "express";
 import { authenticateUser, ensureAdmin } from "../middlewares/auth";
 import {
   createUniversity,
-  deleteUniversityByName,
-  updateUniversityByName,
   getUniversityDescription,
   getAllUniversities,
   getUniversityLinksById,
@@ -14,6 +12,8 @@ import {
   getUniversitySchoolNames,
   getUniversityByProgramType,
   getFieldByType,
+  updateUniversityById,
+  deleteUniversityById,
 } from "../controllers/university";
 
 const router = Router();
@@ -29,7 +29,7 @@ router.get("/:universityId/:type", getUniversityByProgramType);
 router.get("/:universityId/:type/:field", getFieldByType);
 router.get("/", searchUniversitiesByName); //regex option using query params
 router.post("/", ensureAdmin, createUniversity);
-router.put("/", ensureAdmin, updateUniversityByName);
-router.delete("/", ensureAdmin, deleteUniversityByName);
+router.put("/:universityId", ensureAdmin, updateUniversityById);
+router.delete("/:universityId", ensureAdmin, deleteUniversityById);
 
 export default router;

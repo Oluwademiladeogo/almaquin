@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { University } from "../models/university";
 import mongoose from "mongoose";
 import { UniversitySchema } from "../validators/university";
-import { IPostgraduate, IUndergraduate } from "../types";
+import { IPostgraduate, IUndergraduate } from "../types/types";
 
 export const createUniversity = async (
   req: Request,

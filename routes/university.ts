@@ -18,16 +18,16 @@ import {
 
 const router = Router();
 
-router.get("/all", getAllUniversities);
-router.get("/search", getUniversityNames);
-router.get("/:universityId/schools", getUniversitySchoolNames);
+router.get("/all", authenticateUser, getAllUniversities);
+router.get("/search", authenticateUser, getUniversityNames);
+router.get("/:universityId/schools", authenticateUser, getUniversitySchoolNames);
 router.get("/:universityId/faq", getUniversityFAQById);
-router.get("/:universityId/links", getUniversityLinksById);
-router.get("/:universityId/description", getUniversityDescription);
-router.get("/:universityId", getUniversitybyId);
-router.get("/:universityId/:type", getUniversityByProgramType);
-router.get("/:universityId/:type/:field", getFieldByType);
-router.get("/", searchUniversitiesByName); //regex option using query params
+router.get("/:universityId/links", authenticateUser, getUniversityLinksById);
+router.get("/:universityId/description", authenticateUser, getUniversityDescription);
+router.get("/:universityId", authenticateUser, getUniversitybyId);
+router.get("/:universityId/:type", authenticateUser, getUniversityByProgramType);
+router.get("/:universityId/:type/:field", authenticateUser, getFieldByType);
+router.get("/", authenticateUser, searchUniversitiesByName); //regex option using query params
 router.post("/", ensureAdmin, createUniversity);
 router.put("/:universityId", ensureAdmin, updateUniversityById);
 router.delete("/:universityId", ensureAdmin, deleteUniversityById);

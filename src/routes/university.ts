@@ -20,12 +20,24 @@ const router = Router();
 
 router.get("/all", authenticateUser, getAllUniversities);
 router.get("/search", authenticateUser, getUniversityNames);
-router.get("/:universityId/schools", authenticateUser, getUniversitySchoolNames);
+router.get(
+  "/:universityId/schools",
+  authenticateUser,
+  getUniversitySchoolNames
+);
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", authenticateUser, getUniversityLinksById);
-router.get("/:universityId/description", authenticateUser, getUniversityDescription);
+router.get(
+  "/:universityId/description",
+  authenticateUser,
+  getUniversityDescription
+);
 router.get("/:universityId", authenticateUser, getUniversitybyId);
-router.get("/:universityId/:type", authenticateUser, getUniversityByProgramType);
+router.get(
+  "/:universityId/:type",
+  authenticateUser,
+  getUniversityByProgramType
+);
 router.get("/:universityId/:type/:field", authenticateUser, getFieldByType);
 router.get("/", authenticateUser, searchUniversitiesByName); //regex option using query params
 router.post("/", ensureAdmin, createUniversity);

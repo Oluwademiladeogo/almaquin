@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from "joi";
 
 export const NewsSchema = Joi.object({
   title: Joi.string().required(),
@@ -6,5 +6,5 @@ export const NewsSchema = Joi.object({
   author: Joi.string().required(),
   tags: Joi.array().items(Joi.string()),
   publishedDate: Joi.date(),
-  pictures: Joi.array().items(Joi.string().uri())
+  pictures: Joi.array().items(Joi.string().uri()),
 });

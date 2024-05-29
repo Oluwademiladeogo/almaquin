@@ -7,8 +7,9 @@ export const loginController = async (req: Request, res: Response) => {
       const data: any = await createLoginToken(req.body);
 
       if (data.token) {
-        res.status(data.status)
-          .json({ message: data.message, token: data.token});
+        res
+          .status(data.status)
+          .json({ message: data.message, token: data.token });
       } else {
         res.status(data.status).json({ message: data.message });
       }

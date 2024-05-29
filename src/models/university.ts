@@ -115,14 +115,16 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
     type: String,
     required: true,
   },
-  overview: [{
-    name: {
-      type: String,
+  overview: [
+    {
+      name: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
     },
-    description: {
-      type: String,
-    },
-  }],
+  ],
   schools: {
     type: [AcademicSchema],
     required: true,
@@ -135,26 +137,30 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
     type: [PostgraduateSchema],
     required: true,
   },
-  relevantLinks: [{
-    name: {
-      type: String,
-      required: true,
+  relevantLinks: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
-    url: {
-      type: String,
-      required: true,
+  ],
+  faq: [
+    {
+      question: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: String,
+        required: true,
+      },
     },
-  }],
-  faq: [{
-    question: {
-      type: String,
-      required: true,
-    },
-    answer: {
-      type: String,
-      required: true,
-    },
-  }],
+  ],
 });
 
 export const University = mongoose.model<IUniversityDoc>(

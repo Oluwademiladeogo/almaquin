@@ -260,9 +260,8 @@ export const getUniversitySchoolNames = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 
   try {
-    const university = await University.findById(universityId).select(
-      "schools.name -_id"
-    );
+    const university =
+      await University.findById(universityId).select("schools.name -_id");
     if (!university) {
       return res.status(404).json({ error: "University not found" });
     }
@@ -275,37 +274,38 @@ export const getUniversitySchoolNames = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getUniversityByProgramType = async (req: Request, res: Response) => {
+export const getUniversityByProgramType = async (
+  req: Request,
+  res: Response
+) => {
   const { universityId, type } = req.params;
 
   try {
     const university = await University.findById(universityId);
 
     if (!university) {
-      return res.status(404).json({ message: 'University not found' });
+      return res.status(404).json({ message: "University not found" });
     }
 
     let programs = [];
 
     switch (type) {
-      case 'undergraduate':
+      case "undergraduate":
         programs = university.undergraduate;
         break;
-      case 'postgraduate':
+      case "postgraduate":
         programs = university.postgraduate;
         break;
       default:
-        return res.status(400).json({ message: 'Invalid program type' });
+        return res.status(400).json({ message: "Invalid program type" });
     }
 
     res.json(programs);
   } catch (error) {
-    console.error('Error fetching university by program type:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("Error fetching university by program type:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 export const getFieldByType = async (req: Request, res: Response) => {
   const { universityId, type, field } = req.params;
@@ -314,11 +314,11 @@ export const getFieldByType = async (req: Request, res: Response) => {
     const university = await University.findById(universityId);
 
     if (!university) {
-      return res.status(404).json({ message: 'University not found' });
+      return res.status(404).json({ message: "University not found" });
     }
 
-    if (type !== 'undergraduate' && type !== 'postgraduate') {
-      return res.status(400).json({ message: 'Invalid type' });
+    if (type !== "undergraduate" && type !== "postgraduate") {
+      return res.status(400).json({ message: "Invalid type" });
     }
 
     const fieldType = university[type] as IUndergraduate[] | IPostgraduate[];
@@ -327,14 +327,18 @@ export const getFieldByType = async (req: Request, res: Response) => {
     }
 
     // Check if the specified field exists in the type (Undergraduate/Postgraduate)
-    const fieldData = fieldType[0][field as keyof (IPostgraduate | IUndergraduate)];
+    const fieldData =
+      fieldType[0][field as keyof (IPostgraduate | IUndergraduate)];
     if (!fieldData) {
       return res.status(404).json({ message: `${field} not found in ${type}` });
     }
 
     res.json({ [field]: fieldData });
   } catch (error) {
-    console.error(`Error fetching ${field} for ${type} from university ${universityId}:`, error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error(
+      `Error fetching ${field} for ${type} from university ${universityId}:`,
+      error
+    );
+    res.status(500).json({ message: "Internal server error" });
   }
 };

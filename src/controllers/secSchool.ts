@@ -57,12 +57,10 @@ export const updateSchool = async (
     if (!updatedSchool) {
       res.status(404).json({ message: "School not found" });
     } else {
-      res
-        .status(200)
-        .json({
-          message: "School updated successfully",
-          school: updatedSchool,
-        });
+      res.status(200).json({
+        message: "School updated successfully",
+        school: updatedSchool,
+      });
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
@@ -75,9 +73,8 @@ export const deleteSchool = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const deletedSchool: School | null = await SchoolModel.findByIdAndDelete(
-      id
-    );
+    const deletedSchool: School | null =
+      await SchoolModel.findByIdAndDelete(id);
     if (!deletedSchool) {
       res.status(404).json({ message: "School not found" });
     } else {

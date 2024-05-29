@@ -13,7 +13,8 @@
   },
   "scripts": {
     "start": "tsc && node ./lib/server.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -24,6 +25,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.12.2",
     "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0"
   }

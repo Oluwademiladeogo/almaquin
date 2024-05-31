@@ -27,11 +27,14 @@ export const createSecSchool = async (
     }
 
     const { name, location } = req.body;
-    const newSecSchool:ISecSchool = new SecSchoolModel({ name, location });
+    const newSecSchool: ISecSchool = new SecSchoolModel({ name, location });
     await newSecSchool.save();
     res
       .status(201)
-      .json({ message: "Secondary school created successfully", school: newSecSchool });
+      .json({
+        message: "Secondary school created successfully",
+        school: newSecSchool,
+      });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -50,11 +53,8 @@ export const updateSecSchool = async (
 
     const { id } = req.params;
     const { name } = req.body;
-    const updatedSecSchool: ISecSchool | null = await SecSchoolModel.findByIdAndUpdate(
-      id,
-      { name },
-      { new: true }
-    );
+    const updatedSecSchool: ISecSchool | null =
+      await SecSchoolModel.findByIdAndUpdate(id, { name }, { new: true });
     if (!updatedSecSchool) {
       res.status(404).json({ message: "School not found" });
     } else {
@@ -79,7 +79,9 @@ export const deleteSecSchool = async (
     if (!deletedSecSchool) {
       res.status(404).json({ message: "Secondary school not found" });
     } else {
-      res.status(200).json({ message: "Secondary school deleted successfully" });
+      res
+        .status(200)
+        .json({ message: "Secondary school deleted successfully" });
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });

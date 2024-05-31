@@ -1,13 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-
-interface INews extends Document {
-  title: string;
-  content: string;
-  author: string;
-  tags: string[];
-  publishedDate: Date;
-  pictures: string[];
-}
+import mongoose, { Schema } from "mongoose";
+import { INews } from "../types/types";
 
 const NewsSchema: Schema = new Schema({
   title: {

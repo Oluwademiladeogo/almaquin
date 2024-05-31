@@ -8,36 +8,58 @@ export interface IUserDoc extends Document {
   role: string;
 }
 
-export interface IProgram {
+
+interface IProgram {
   name: string;
-  certs: string[];
+  certs?: string[];
+  fees: string;
 }
 
-export interface IAcademic {
+interface IAcademic {
   name: string;
   programs: IProgram[];
 }
 
-export interface IUndergraduate {
+interface IUndergraduate extends Document {
   name: string;
   programs: IProgram[];
+  dates: string;
+  admissions: string;
+  documents: string;
+  fluidStudents: string;
+  exams: string;
 }
 
-export interface IPostgraduate {
+interface IPostgraduate extends Document {
   name: string;
   programs: IProgram[];
+  dates: string;
+  admissions: string;
+  documents: string;
+  fluidStudents: string;
+  exams: string;
 }
 
-export interface IUniversityDoc extends Document {
+interface IUniversityDoc extends Document {
   name: string;
-  shortName: string;
+  shortName?: string;
   picture: string;
   websiteLink: string;
-  overview: Record<string, string>;
+  overview: {
+    name: string;
+    description: string;
+  }[];
   schools: IAcademic[];
   undergraduate: IUndergraduate[];
   postgraduate: IPostgraduate[];
-  relevantLinks: Record<string, string>;
+  relevantLinks: {
+    name: string;
+    url: string;
+  }[];
+  faq: {
+    question: string;
+    answer: string;
+  }[];
 }
 
 export interface JwtPayload {

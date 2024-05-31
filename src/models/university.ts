@@ -1,58 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-interface IProgram {
-  name: string;
-  certs?: string[];
-}
-
-interface IAcademic {
-  name: string;
-  programs: IProgram[];
-}
-
-interface IUndergraduate extends Document {
-  name: string;
-  programs: IProgram[];
-  dates: string;
-  admissions: string;
-  documents: string;
-  fluidStudents: string;
-  exams: string;
-  fees: string;
-}
-
-interface IPostgraduate extends Document {
-  name: string;
-  programs: IProgram[];
-  dates: string;
-  admissions: string;
-  documents: string;
-  fluidStudents: string;
-  exams: string;
-  fees: string;
-}
-
-interface IUniversityDoc extends Document {
-  name: string;
-  shortName?: string;
-  picture: string;
-  websiteLink: string;
-  overview: {
-    name: string;
-    description: string;
-  }[];
-  schools: IAcademic[];
-  undergraduate: IUndergraduate[];
-  postgraduate: IPostgraduate[];
-  relevantLinks: {
-    name: string;
-    url: string;
-  }[];
-  faq: {
-    question: string;
-    answer: string;
-  }[];
-}
+import { IAcademic, IPostgraduate, IProgram, IUndergraduate, IUniversityDoc } from "../types/types";
 
 const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
   name: {
@@ -60,6 +7,7 @@ const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
     required: true,
   },
   certs: [String],
+  fees: String,
 });
 
 const AcademicSchema: Schema<IAcademic> = new Schema<IAcademic>({
@@ -81,7 +29,6 @@ const UndergraduateSchema: Schema<IUndergraduate> = new Schema<IUndergraduate>({
   documents: String,
   fluidStudents: String,
   exams: String,
-  fees: String,
 });
 
 const PostgraduateSchema: Schema<IPostgraduate> = new Schema<IPostgraduate>({
@@ -95,7 +42,6 @@ const PostgraduateSchema: Schema<IPostgraduate> = new Schema<IPostgraduate>({
   documents: String,
   fluidStudents: String,
   exams: String,
-  fees: String,
 });
 
 const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({

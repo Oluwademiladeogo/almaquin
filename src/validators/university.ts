@@ -69,4 +69,6 @@ export const UniversitySchema = Joi.object({
   postgraduate: Joi.array().items(PostgraduateSchema).required(),
   relevantLinks: Joi.array().items(RelevantLinksSchema),
   faq: Joi.array().items(FAQSchema),
+  dateAdded: Joi.date().default(() => new Date()),
+  dateModified: Joi.date().default(() => new Date()),
 });

@@ -69,6 +69,8 @@ interface IUniversityDoc extends Document {
     question: string;
     answer: string;
   }[];
+  dateAdded: Date;
+  dateModified: Date;
 }
 
 export interface JwtPayload {

@@ -146,6 +146,14 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
       },
     },
   ],
+  dateAdded: {
+    type: Date,
+    default: Date.now,
+  },
+  dateModified: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export const University = mongoose.model<IUniversityDoc>(

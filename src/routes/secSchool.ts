@@ -1,17 +1,17 @@
 import express from "express";
 import {
-  getAllSchools,
-  createSchool,
-  updateSchool,
-  deleteSchool,
+  getAllSecSSchools,
+  createSecSchool,
+  updateSecSchool,
+  deleteSecSchool,
 } from "../controllers/secSchool";
 import { ensureAdmin } from "../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/", getAllSchools);
-router.post("/", ensureAdmin, createSchool);
-router.put("/", ensureAdmin, updateSchool);
-router.delete("/", ensureAdmin, deleteSchool);
+router.get("/", getAllSecSSchools);
+router.post("/", ensureAdmin, createSecSchool);
+router.put("/", ensureAdmin, updateSecSchool);
+router.delete("/", ensureAdmin, deleteSecSchool);
 
 export default router;

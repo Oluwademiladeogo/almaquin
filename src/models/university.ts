@@ -1,5 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IAcademic, IPostgraduate, IProgram, IUndergraduate, IUniversityDoc } from "../types/types";
+import {
+  IAcademic,
+  IPostgraduate,
+  IProgram,
+  IUndergraduate,
+  IUniversityDoc,
+} from "../types/types";
 
 const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
   name: {
@@ -92,7 +98,7 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
       contact: {
         type: String,
       },
-    }
+    },
   ],
   overview: [
     {

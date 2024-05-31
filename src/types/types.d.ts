@@ -8,7 +8,6 @@ export interface IUserDoc extends Document {
   role: string;
 }
 
-
 interface IProgram {
   name: string;
   certs?: string[];

@@ -3,6 +3,7 @@ import Joi from "joi";
 const ProgramSchema = Joi.object({
   name: Joi.string().required(),
   certs: Joi.array().items(Joi.string()),
+  fees: Joi.string().required(),
 });
 
 const AcademicSchema = Joi.object({
@@ -15,7 +16,6 @@ const UndergraduateSchema = Joi.object({
   programs: Joi.array().items(ProgramSchema).required(),
   fluidStudents: Joi.string().required(),
   exams: Joi.string().required(),
-  fees: Joi.string().required(),
   dates: Joi.string().required(),
   admissions: Joi.string().required(),
   documents: Joi.string().required(),
@@ -26,7 +26,6 @@ const PostgraduateSchema = Joi.object({
   programs: Joi.array().items(ProgramSchema).required(),
   fluidStudents: Joi.string().required(),
   exams: Joi.string().required(),
-  fees: Joi.string().required(),
   dates: Joi.string().required(),
   admissions: Joi.string().required(),
   documents: Joi.string().required(),
@@ -35,6 +34,11 @@ const PostgraduateSchema = Joi.object({
 const OverviewSchema = Joi.object({
   name: Joi.string(),
   description: Joi.string(),
+});
+
+const ContactSchema = Joi.object({
+  name: Joi.string(),
+  contact: Joi.string(),
 });
 
 const RelevantLinksSchema = Joi.object({
@@ -52,6 +56,13 @@ export const UniversitySchema = Joi.object({
   shortName: Joi.string(),
   picture: Joi.string().required(),
   websiteLink: Joi.string().required(),
+  address: Joi.string().required(),
+  pageCreator: Joi.string().required(),
+  ownership: Joi.string().required(),
+  designation: Joi.string(),
+  yearFounded: Joi.string().required(),
+  location: Joi.string().required(),
+  contact: Joi.array().items(ContactSchema),
   overview: Joi.array().items(OverviewSchema),
   schools: Joi.array().items(AcademicSchema).required(),
   undergraduate: Joi.array().items(UndergraduateSchema).required(),

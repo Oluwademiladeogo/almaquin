@@ -1,12 +1,12 @@
-import signupRouter from "./routes/signup";
-import loginRouter from "./routes/login";
+import signupRouter from "./src/routes/signup";
+import loginRouter from "./src/routes/login";
 import { Express } from "express";
-import logoutRouter from "./routes/logout";
-import universityRouter from "./routes/university";
-import userRouter from "./routes/user";
-import userContactRouter from "./routes/userContact";
-import contactInfoRouter from "./routes/contactInfo";
-import secSchoolRouter from "./routes/secSchool"
+import logoutRouter from "./src/routes/logout";
+import universityRouter from "./src/routes/university";
+import userRouter from "./src/routes/user";
+import userContactRouter from "./src/routes/userContact";
+import contactInfoRouter from "./src/routes/contactInfo";
+import secSchoolRouter from "./src/routes/secSchool"
 export const RouteHandler = async (app: Express) => {
   app.use("/api/signup", signupRouter);
   app.use("/api/login", loginRouter);

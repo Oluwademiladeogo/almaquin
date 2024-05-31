@@ -1,12 +1,12 @@
 import express from "express";
 import { config } from "dotenv";
-import { connectDB } from "./startup/db";
+import { connectDB } from "./src/startup/db";
 import { RouteHandler } from "./app";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
-import { corsOptions } from "./startup/cors";
-import errorHandler from "./middlewares/error";
+import { corsOptions } from "./src/startup/cors";
+import errorHandler from "./src/middlewares/error";
 
 const app = express();
 config();

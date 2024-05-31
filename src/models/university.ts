@@ -61,6 +61,39 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    required: true,
+  },
+  pageCreator: {
+    type: String,
+    required: true,
+  },
+  ownership: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  yearFounded: {
+    type: String,
+    required: true,
+  },
+  designation: {
+    type: String,
+  },
+  contacts: [
+    {
+      name: {
+        type: String,
+      },
+      contact: {
+        type: String,
+      },
+    }
+  ],
   overview: [
     {
       name: {

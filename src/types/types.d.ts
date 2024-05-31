@@ -45,6 +45,16 @@ interface IUniversityDoc extends Document {
   shortName?: string;
   picture: string;
   websiteLink: string;
+  address: string;
+  pageCreator: string;
+  ownership: string;
+  contacts: {
+    name: string;
+    contact: string;
+  }[];
+  location: string;
+  yearFounded: string;
+  designation?: string;
   overview: {
     name: string;
     description: string;

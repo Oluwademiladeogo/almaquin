@@ -1,47 +1,48 @@
 import { Request, Response } from "express";
-import SchoolModel, { School } from "../models/secSchool";
-import { createSchoolSchema } from "../validators/secSchool";
+import SecSchoolModel from "../models/secSchool";
+import { createSecSchoolSchema } from "../validators/secSchool";
+import { ISecSchool } from "../types/types";
 
-export const getAllSchools = async (
+export const getAllSecSSchools = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const schools = await SchoolModel.find();
-    res.status(200).json({ schools });
+    const secSchools = await SecSchoolModel.find();
+    res.status(200).json({ secSchools });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-export const createSchool = async (
+export const createSecSchool = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { error } = createSchoolSchema.validate(req.body);
+    const { error } = createSecSchoolSchema.validate(req.body);
     if (error) {
       res.status(400).json({ error: error.details[0].message });
       return;
     }
 
     const { name, location } = req.body;
-    const newSchool: School = new SchoolModel({ name, location });
-    await newSchool.save();
+    const newSecSchool:ISecSchool = new SecSchoolModel({ name, location });
+    await newSecSchool.save();
     res
       .status(201)
-      .json({ message: "School created successfully", school: newSchool });
+      .json({ message: "Secondary school created successfully", school: newSecSchool });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-export const updateSchool = async (
+export const updateSecSchool = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { error } = createSchoolSchema.validate(req.body);
+    const { error } = createSecSchoolSchema.validate(req.body);
     if (error) {
       res.status(400).json({ error: error.details[0].message });
       return;
@@ -49,17 +50,17 @@ export const updateSchool = async (
 
     const { id } = req.params;
     const { name } = req.body;
-    const updatedSchool: School | null = await SchoolModel.findByIdAndUpdate(
+    const updatedSecSchool: ISecSchool | null = await SecSchoolModel.findByIdAndUpdate(
       id,
       { name },
       { new: true }
     );
-    if (!updatedSchool) {
+    if (!updatedSecSchool) {
       res.status(404).json({ message: "School not found" });
     } else {
       res.status(200).json({
-        message: "School updated successfully",
-        school: updatedSchool,
+        message: "Secondary school updated successfully",
+        school: updatedSecSchool,
       });
     }
   } catch (error) {
@@ -67,18 +68,18 @@ export const updateSchool = async (
   }
 };
 
-export const deleteSchool = async (
+export const deleteSecSchool = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const deletedSchool: School | null =
-      await SchoolModel.findByIdAndDelete(id);
-    if (!deletedSchool) {
-      res.status(404).json({ message: "School not found" });
+    const deletedSecSchool: ISecSchool | null =
+      await SecSchoolModel.findByIdAndDelete(id);
+    if (!deletedSecSchool) {
+      res.status(404).json({ message: "Secondary school not found" });
     } else {
-      res.status(200).json({ message: "School deleted successfully" });
+      res.status(200).json({ message: "Secondary school deleted successfully" });
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });

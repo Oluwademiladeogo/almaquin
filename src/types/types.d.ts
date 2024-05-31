@@ -8,7 +8,7 @@ export interface INews extends Document {
   publishedDate: Date;
   pictures: string[];
 }
-export interface ISchool extends Document {
+export interface ISecSchool extends Document {
   name: string;
   location?: string;
 }

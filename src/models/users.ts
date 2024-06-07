@@ -18,6 +18,9 @@ export const User = mongoose.model<IUserDoc>(
       type: String,
       required: true,
     },
+    otp: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ["User", "Admin"],

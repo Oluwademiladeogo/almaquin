@@ -15,9 +15,9 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(cors());
-// process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
+process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
 RouteHandler(app);
 app.use(errorHandler)
 const port = process.env.PORT || 3000;

@@ -38,6 +38,7 @@ export interface IUserDoc extends Document {
   schoolLocation: string;
   classLevel: string;
   reasonForJoining: string;
+  otp?: string;
 }
 
 export interface IProgram {

@@ -8,7 +8,9 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
     if (!otpSent.success) {
       return res.status(otpSent.status).json({ message: otpSent.message });
     }
-    res.status(200).json({ message: "OTP sent to your email for password reset" });
+    res
+      .status(200)
+      .json({ message: "OTP sent to your email for password reset" });
   } catch (error) {
     console.error("Error in forgot password controller:", error);
     res.status(500).json({ message: "Internal Server Error" });

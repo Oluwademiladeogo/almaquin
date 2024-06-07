@@ -5,7 +5,10 @@ import * as jwt from "jsonwebtoken";
 import { loginUserDto } from "../dto/users";
 import validate from "../validators/login";
 
-export const createLoginToken = async (data: loginUserDto, otp: string): Promise<any> => {
+export const createLoginToken = async (
+  data: loginUserDto,
+  otp: string
+): Promise<any> => {
   const { error } = validate(data);
   if (error) return { status: 400, message: error.details[0].message };
 
@@ -14,7 +17,7 @@ export const createLoginToken = async (data: loginUserDto, otp: string): Promise
   try {
     const user = await User.findOne({ email });
 
-    if (!user || !await bcrypt.compare(password, user.password)) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return { status: 401, message: "Incorrect email or password" };
     }
 

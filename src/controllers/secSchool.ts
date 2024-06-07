@@ -29,12 +29,10 @@ export const createSecSchool = async (
     const { name, location } = req.body;
     const newSecSchool: ISecSchool = new SecSchoolModel({ name, location });
     await newSecSchool.save();
-    res
-      .status(201)
-      .json({
-        message: "Secondary school created successfully",
-        school: newSecSchool,
-      });
+    res.status(201).json({
+      message: "Secondary school created successfully",
+      school: newSecSchool,
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

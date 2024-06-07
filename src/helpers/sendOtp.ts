@@ -4,14 +4,15 @@ import { User } from "../models/users";
 export const sendOtp = async (email: string) => {
   try {
     const user = await User.findOne({ email });
-    if (!user) return { success: false, status: 404, message: "User not found" };
+    if (!user)
+      return { success: false, status: 404, message: "User not found" };
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     user.otp = otp;
     await user.save({ validateBeforeSave: false });
 
     const transporter = nodemailer.createTransport({
-      service: 'Gmail',
+      service: "Gmail",
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASSWORD,
@@ -21,7 +22,7 @@ export const sendOtp = async (email: string) => {
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
-      subject: 'Your OTP Code from AlmaQuin',
+      subject: "Your OTP Code from AlmaQuin",
       text: `Your OTP code is ${otp}`,
     };
 

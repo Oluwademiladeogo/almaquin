@@ -1,29 +1,28 @@
 import { Request, Response } from "express";
-import { createLoginToken } from "../helpers/createLoginToken";
-import { validate } from "../validators/login";
+import { User } from "../models/users";
 
 export const otpVerificationController = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const { email, password, otp } = req.body;
-    const { error } = validate({ email, password });
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email });
 
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const loginData = { email, password };
-    const data = await createLoginToken(loginData, otp);
-
-    if (data.token) {
-      res
-        .status(data.status)
-        .json({ message: data.message, token: data.token });
-    } else {
-      res.status(data.status).json({ message: data.message });
+    if (user.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
     }
+
+    // Clear OTP after successful verification
+    user.otp = undefined;
+    user.isVerified = true;
+    await user.save();
+
+    res.status(200).json({ message: "User verified successfully" });
   } catch (error) {
     console.error("Error in OTP verification controller:", error);
     res.status(500).json({ message: "Internal Server Error" });

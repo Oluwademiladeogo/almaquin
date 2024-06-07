@@ -5,10 +5,7 @@ import * as jwt from "jsonwebtoken";
 import { loginUserDto } from "../dto/users";
 import validate from "../validators/login";
 
-export const createLoginToken = async (
-  data: loginUserDto,
-  otp: string
-): Promise<any> => {
+export const createLoginToken = async (data: loginUserDto): Promise<any> => {
   const { error } = validate(data);
   if (error) return { status: 400, message: error.details[0].message };
 
@@ -21,8 +18,11 @@ export const createLoginToken = async (
       return { status: 401, message: "Incorrect email or password" };
     }
 
-    if (user.otp !== otp) {
-      return { status: 401, message: "Invalid OTP" };
+    if (!user.isVerified) {
+      return {
+        status: 403,
+        message: "Account not verified. Please verify your account first.",
+      };
     }
 
     const payload: JwtPayload = {

@@ -39,6 +39,7 @@ export interface IUserDoc extends Document {
   classLevel: string;
   reasonForJoining: string;
   otp?: string;
+  isVerified: boolean;
 }
 
 export interface IProgram {

@@ -54,5 +54,9 @@ export const User = mongoose.model<IUserDoc>(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   })
 );

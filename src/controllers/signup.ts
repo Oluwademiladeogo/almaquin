@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../models/users";
 import { validate } from "../validators/signup";
 import { getHashedPassword } from "../helpers/hashPassword";
+import { sendOtp } from "../helpers/sendOtp";
 
 export const signupController = async (
   req: Request,
@@ -14,7 +15,7 @@ export const signupController = async (
     surname,
     firstName,
     birthday,
-    phoneNo,
+    phone_no,
     email,
     presentSchool,
     classLevel,
@@ -31,7 +32,7 @@ export const signupController = async (
 
   user = new User({
     email,
-    phone_no: phoneNo,
+    phone_no,
     password: hashedPassword,
     surname,
     firstName,
@@ -44,5 +45,12 @@ export const signupController = async (
 
   await user.save();
 
-  res.status(201).json({ message: "User created successfully" });
+  const otpSent = await sendOtp(email);
+  if (!otpSent.success) {
+    return res.status(otpSent.status).json({ message: otpSent.message });
+  }
+
+  res
+    .status(201)
+    .json({ message: "User created successfully, OTP sent to your email" });
 };

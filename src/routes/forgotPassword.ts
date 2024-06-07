@@ -3,6 +3,6 @@ import { forgotPasswordController } from "../controllers/forgotPassword";
 
 const router = Router();
 
-router.post("/forgot-password", forgotPasswordController);
+router.post("/", forgotPasswordController);
 
 export default router;

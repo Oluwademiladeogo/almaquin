@@ -14,9 +14,9 @@ config();
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(cors(corsOptions));
-app.use(cors());
+app.options('*', cors(corsOptions));
+
 process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
 RouteHandler(app);
 app.use(errorHandler)

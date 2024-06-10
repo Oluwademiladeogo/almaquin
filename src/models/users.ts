@@ -9,7 +9,7 @@ export const User = mongoose.model<IUserDoc>(
       required: true,
       unique: true,
     },
-    phone_no: {
+    phoneNo: {
       type: String,
       required: true,
       unique: true,

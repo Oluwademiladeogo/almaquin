@@ -28,7 +28,7 @@ export interface IUserContact {
 
 export interface IUserDoc extends Document {
   email: string;
-  phone_no: string;
+  phoneNo: string;
   password: string;
   role: string;
   surname: string;

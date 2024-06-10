@@ -28,7 +28,7 @@ export const createLoginToken = async (data: loginUserDto): Promise<any> => {
     const payload: JwtPayload = {
       id: user._id,
       name: user.firstName,
-      phone: user.phone_no,
+      phone: user.phoneNo,
     };
 
     const secret: string = process.env.JWTKEY || "";

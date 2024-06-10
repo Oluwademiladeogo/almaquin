@@ -20,7 +20,7 @@ app.use(cors());
 // process.env.NODE_ENV == "production" ? app.use(helmet()) : "";
 RouteHandler(app);
 app.use(errorHandler);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -15,7 +15,7 @@ export const signupController = async (
     surname,
     firstName,
     birthday,
-    phone_no,
+    phoneNo,
     email,
     presentSchool,
     classLevel,
@@ -32,7 +32,7 @@ export const signupController = async (
 
   user = new User({
     email,
-    phone_no,
+    phoneNo,
     password: hashedPassword,
     surname,
     firstName,

@@ -18,12 +18,12 @@ export const createLoginToken = async (data: loginUserDto): Promise<any> => {
       return { status: 401, message: "Incorrect email or password" };
     }
 
-    // if (!user.isVerified) {
-    //   return {
-    //     status: 403,
-    //     message: "Account not verified. Please verify your account first.",
-    //   };
-    // }
+    if (!user.isVerified) {
+      return {
+        status: 403,
+        message: "Account not verified. Please verify your account first.",
+      };
+    }
 
     const payload: JwtPayload = {
       id: user._id,

@@ -59,10 +59,10 @@ const UserSchema = new mongoose.Schema<IUserDoc>({
   },
 });
 
-UserSchema.pre('save', async function(next) {
-  if (this.isModified('password') || this.isNew) {
-    const value:any = await getHashedPassword(this.password);
-    this.password = value.hashedPassword
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("password") || this.isNew) {
+    const value: any = await getHashedPassword(this.password);
+    this.password = value.hashedPassword;
   }
   next();
 });

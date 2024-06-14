@@ -74,6 +74,7 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
   pageCreator: {
     type: String,
     required: true,
+    immutable: true,
   },
   ownership: {
     type: String,
@@ -154,11 +155,16 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
     type: Date,
     default: Date.now,
   },
+  lastUpdatedBy: {
+    type: String,
+  },
 });
+
 UniversitySchema.pre("save", function (next) {
   this.dateModified = new Date();
   next();
 });
+
 export const University = mongoose.model<IUniversityDoc>(
   "University",
   UniversitySchema

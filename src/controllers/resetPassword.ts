@@ -1,36 +1,29 @@
 import { Request, Response } from "express";
 import { User } from "../models/users";
 import { getHashedPassword } from "../helpers/hashPassword";
-import { validateResetPassword } from "../validators/resetPassword";
 
 export const resetPasswordController = async (req: Request, res: Response) => {
   try {
-    const { email, otp, newPassword } = req.body;
-
-    const { error } = validateResetPassword({ email, otp, newPassword });
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
-
-    const user = await User.findOne({ email });
+    const { token, newPassword } = req.body;
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }, // Ensure token is not expired
+    });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(400).json({ message: "Invalid or expired token" });
     }
 
-    if (user.otp !== otp) {
-      return res.status(400).json({ message: "Invalid OTP" });
-    }
-
+    // Hash the new password
     const { hashedPassword } = await getHashedPassword(newPassword);
     user.password = hashedPassword;
-
-    user.otp = undefined;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.status(200).json({ message: "Password reset successful" });
+    res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
-    console.error("Error in password reset controller:", error);
+    console.error("Error in reset password controller:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -21,10 +21,14 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
 
     const magicLinkSent = await sendMagicLink(email, token);
     if (!magicLinkSent.success) {
-      return res.status(magicLinkSent.status || 500).json({ message: magicLinkSent.message });
+      return res
+        .status(magicLinkSent.status || 500)
+        .json({ message: magicLinkSent.message });
     }
 
-    res.status(200).json({ message: "Magic link sent to your email for password reset" });
+    res
+      .status(200)
+      .json({ message: "Magic link sent to your email for password reset" });
   } catch (error) {
     console.error("Error in forgot password controller:", error);
     res.status(500).json({ message: "Internal Server Error" });

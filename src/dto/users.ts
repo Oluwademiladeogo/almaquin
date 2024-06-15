@@ -15,3 +15,8 @@ export interface loginUserDto {
   email: string;
   password: string;
 }
+
+export interface resetPasswordDto {
+  token: string;
+  password: string;
+}

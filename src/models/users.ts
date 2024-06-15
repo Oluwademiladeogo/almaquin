@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema<IUserDoc>({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   otp: {
     type: String,
@@ -66,10 +66,6 @@ const UserSchema = new mongoose.Schema<IUserDoc>({
 });
 
 UserSchema.pre("save", async function (next) {
-  if (this.isModified("password") || this.isNew) {
-    const value: any = await getHashedPassword(this.password);
-    this.password = value.hashedPassword;
-  }
   this.email = this.email.toLowerCase();
   next();
 });

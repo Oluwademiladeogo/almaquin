@@ -4,7 +4,7 @@ import { getHashedPassword } from "../helpers/hashPassword";
 
 export const resetPasswordController = async (req: Request, res: Response) => {
   try {
-    const { token, newPassword } = req.body;
+    const { token, password } = req.body;
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() }, // Ensure token is not expired
@@ -15,7 +15,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
     }
 
     // Hash the new password
-    const { hashedPassword } = await getHashedPassword(newPassword);
+    const { hashedPassword } = await getHashedPassword(password);
     user.password = hashedPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;

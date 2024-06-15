@@ -2,7 +2,7 @@ import Joi, { ValidationResult } from "joi";
 import { resetPasswordDto } from "../dto/users";
 
 const Schema = Joi.object({
-  token: Joi.string().email().min(5).max(255).required(),
+  token: Joi.string().min(5).max(255).required(),
   password: Joi.string().min(8).max(255).required(),
 });
 

@@ -25,6 +25,8 @@ export const resetPasswordController = async (req: Request, res: Response) => {
     user.password = hashedPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
+    user.otp = undefined;
+    user.isVerified = true;
     await user.save();
 
     res.status(200).json({ message: "Password reset successfully" });

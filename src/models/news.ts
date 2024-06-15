@@ -19,9 +19,16 @@ const NewsSchema: Schema = new Schema({
       type: String,
     },
   ],
-  publishedDate: {
+  dateAdded: {
     type: Date,
     default: Date.now,
+  },
+  dateModified: {
+    type: Date,
+    default: Date.now,
+  },
+  lastUpdatedBy: {
+    type: String,
   },
   pictures: [
     {

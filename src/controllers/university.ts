@@ -346,3 +346,33 @@ export const getFieldByType = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const filterUniversities = async (req: Request, res: Response) => {
+  try {
+    const { yearFounded, location, ownership, address, fees } = req.query;
+
+    const filterConditions: any = {};
+
+    if (yearFounded) {
+      filterConditions.yearFounded = yearFounded;
+    }
+    if (location) {
+      filterConditions.location = { $regex: location, $options: "i" };
+    }
+    if (ownership) {
+      filterConditions.ownership = { $regex: ownership, $options: "i" };
+    }
+    if (address) {
+      filterConditions.address = { $regex: address, $options: "i" };
+    }
+    if (fees) {
+      filterConditions.fees = fees;
+    }
+
+    const universities = await University.find(filterConditions);
+    res.status(200).json(universities);
+  } catch (error) {
+    console.error("Error filtering universities:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

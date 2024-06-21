@@ -14,12 +14,14 @@ import {
   getFieldByType,
   updateUniversityById,
   deleteUniversityById,
+  filterUniversities,
 } from "../controllers/university";
 
 const router = Router();
 
 router.get("/all", authenticateUser, getAllUniversities);
 router.get("/search", authenticateUser, getUniversityNames);
+router.get("/filter", filterUniversities);
 router.get(
   "/:universityId/schools",
   authenticateUser,

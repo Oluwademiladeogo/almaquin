@@ -9,6 +9,7 @@ import contactInfoRouter from "./src/routes/contactInfo";
 import forgotPasswordRouter from "./src/routes/forgotPassword";
 import resetPasswordRouter from "./src/routes/resetPassword";
 import secSchoolRouter from "./src/routes/secSchool"
+import testRouter from "./src/routes/test"
 export const RouteHandler = async (app: Express) => {
   app.use("/api/signup", signupRouter);
   app.use("/api/login", loginRouter);
@@ -20,4 +21,5 @@ export const RouteHandler = async (app: Express) => {
   app.use("/api/sec-schools", secSchoolRouter)
   app.use("/api/forgot-password", forgotPasswordRouter);
   app.use("/api/reset-password", resetPasswordRouter);
+  app.use("/api/test", testRouter);
 };

@@ -10,6 +10,7 @@ export const signupController = async (
 ): Promise<any> => {
   const { error, value } = validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
+  req.body.email = req.body.email.toLowerCase();
 
   let {
     surname,

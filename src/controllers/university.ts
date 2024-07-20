@@ -349,7 +349,7 @@ export const getFieldByType = async (req: Request, res: Response) => {
 
 export const filterUniversities = async (req: Request, res: Response) => {
   try {
-    const { yearFounded, location, ownership, address, fees } = req.query;
+    const { yearFounded, location, ownership, fees } = req.query;
 
     const filterConditions: any = {};
 
@@ -362,11 +362,22 @@ export const filterUniversities = async (req: Request, res: Response) => {
     if (ownership) {
       filterConditions.ownership = { $regex: ownership, $options: "i" };
     }
-    if (address) {
-      filterConditions.address = { $regex: address, $options: "i" };
-    }
     if (fees) {
-      filterConditions.fees = fees;
+      const feeRanges: any = {
+        "10000-250000": { $gte: 10000, $lte: 250000 },
+        "251000-500000": { $gte: 251000, $lte: 500000 },
+        "500000-750000": { $gte: 500000, $lte: 750000 },
+        "750000-1000000": { $gte: 750000, $lte: 1000000 },
+        "1000000-2500000": { $gte: 1000000, $lte: 2500000 },
+        "2500000-3500000": { $gte: 2500000, $lte: 3500000 },
+        "3500000-5000000": { $gte: 3500000, $lte: 5000000 },
+        "5000000-": { $gte: 5000000 },
+      };
+
+      const selectedRange = feeRanges[fees as string];
+      if (selectedRange) {
+        filterConditions.fees = selectedRange;
+      }
     }
 
     const universities = await University.find(filterConditions);

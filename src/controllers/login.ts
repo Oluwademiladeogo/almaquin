@@ -4,7 +4,8 @@ import { validate } from "../validators/login";
 
 export const loginController = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email.toLowercase()
     const { error } = validate({ email, password });
 
     if (error) {

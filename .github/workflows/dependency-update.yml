@@ -2,8 +2,8 @@ name: Update Dependencies
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Every Sunday at midnight
-  workflow_dispatch: 
+    - cron: "0 0 * * 0" # Every Sunday at midnight
+  workflow_dispatch:
 
 jobs:
   update-dependencies:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
@@ -39,5 +39,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add .
-          git commit -m 'chore: update dependencies'
+          git diff --quiet && git diff --staged --quiet || git commit -m 'chore: update dependencies'
           git push

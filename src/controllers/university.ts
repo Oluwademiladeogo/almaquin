@@ -301,7 +301,6 @@ export const getUniversityFeesById = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getUniversitySchoolNames = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 

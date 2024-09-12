@@ -6,7 +6,7 @@ import crypto from "crypto";
 export const forgotPasswordController = async (req: Request, res: Response) => {
   try {
     let { email } = req.body;
-    email = email.toLowerCase()
+    email = email.toLowerCase();
     const user = await User.findOne({ email });
 
     if (!user) {

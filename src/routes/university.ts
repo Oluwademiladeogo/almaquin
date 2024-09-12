@@ -15,6 +15,7 @@ import {
   updateUniversityById,
   deleteUniversityById,
   filterUniversities,
+  getUniversityFeesById,
 } from "../controllers/university";
 
 const router = Router();
@@ -29,6 +30,7 @@ router.get(
 );
 router.get("/:universityId/faq", getUniversityFAQById);
 router.get("/:universityId/links", authenticateUser, getUniversityLinksById);
+router.get("/:universityId/fees", authenticateUser, getUniversityFeesById);
 router.get(
   "/:universityId/description",
   authenticateUser,

@@ -13,9 +13,20 @@ const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
     required: true,
   },
   certs: [String],
-  fees: String,
+  fees: {
+    tuition: { type: String, required: true },
+    applicationFee: { type: String, required: true },
+    applicationFeeWaiver: { type: String },
+    scholarships: [
+      {
+        name: { type: String, required: true },
+        details: { type: String, required: true },
+      },
+    ],
+  },
 });
 
+// Academic, Undergraduate, and Postgraduate schemas
 const AcademicSchema: Schema<IAcademic> = new Schema<IAcademic>({
   name: {
     type: String,
@@ -50,6 +61,7 @@ const PostgraduateSchema: Schema<IPostgraduate> = new Schema<IPostgraduate>({
   exams: String,
 });
 
+// University schema
 const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
   name: {
     type: String,

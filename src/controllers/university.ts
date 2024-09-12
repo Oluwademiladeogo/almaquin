@@ -260,6 +260,48 @@ export const getUniversityLinksById = async (req: Request, res: Response) => {
   }
 };
 
+export const getUniversityFeesById = async (req: Request, res: Response) => {
+  try {
+    const universityId = req.params.universityId;
+    const university = await University.findById(universityId);
+
+    if (!university) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    // Iterate over all schools to gather program fees information
+    const feesInfo = {
+      undergraduate: university.undergraduate.map((undergrad) => ({
+        name: undergrad.name,
+        programs: undergrad.programs.map((program) => ({
+          programName: program.name,
+          fees: program.fees,
+        })),
+      })),
+      postgraduate: university.postgraduate.map((postgrad) => ({
+        name: postgrad.name,
+        programs: postgrad.programs.map((program) => ({
+          programName: program.name,
+          fees: program.fees,
+        })),
+      })),
+      academic: university.schools.map((school) => ({
+        name: school.name,
+        programs: school.programs.map((program) => ({
+          programName: program.name,
+          fees: program.fees,
+        })),
+      })),
+    };
+
+    res.status(200).json({ message: "success", fees: feesInfo });
+  } catch (error) {
+    console.error("Error fetching fees:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 export const getUniversitySchoolNames = async (req: Request, res: Response) => {
   const universityId = req.params.universityId;
 

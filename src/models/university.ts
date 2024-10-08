@@ -13,17 +13,15 @@ const ProgramSchema: Schema<IProgram> = new Schema<IProgram>({
     required: true,
   },
   certs: [String],
-  fees: {
-    tuition: { type: String, required: true },
-    applicationFee: { type: String, required: true },
-    applicationFeeWaiver: { type: String },
-    scholarships: [
-      {
-        name: { type: String, required: true },
-        details: { type: String, required: true },
-      },
-    ],
-  },
+  tuitionFee: { type: String, required: true },
+  applicationFee: { type: String, required: true },
+  applicationFeeWaiver: { type: String },
+  scholarships: [
+    {
+      name: { type: String, required: true },
+      details: { type: String, required: true },
+    },
+  ],
 });
 
 // Academic, Undergraduate, and Postgraduate schemas

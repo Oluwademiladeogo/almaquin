@@ -44,10 +44,18 @@ export interface IUserDoc extends Document {
   resetPasswordExpires?: Date;
 }
 
+export interface IScholarship {
+  name: string;
+  details: string;
+}
+
 export interface IProgram {
   name: string;
   certs?: string[];
-  fees: string;
+  tuitionFee: string;
+  applicationFee: string;
+  applicationFeeWaiver?: string;
+  scholarships?: IScholarship[];
 }
 
 export interface IAcademic {

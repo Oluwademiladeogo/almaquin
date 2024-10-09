@@ -271,27 +271,46 @@ export const getUniversityFeesById = async (req: Request, res: Response) => {
 
     // Iterate over all schools to gather program fees information
     const feesInfo = {
-      undergraduate: university.undergraduate.map((undergrad) => ({
+      undergraduate: university.undergraduate ? university.undergraduate.map((undergrad) => ({
         name: undergrad.name,
         programs: undergrad.programs.map((program) => ({
           programName: program.name,
-          fees: program.fees,
+          tuitionFee: program.tuitionFee,
+          applicationFee: program.applicationFee,
+          applicationFeeWaiver: program.applicationFeeWaiver,
+          scholarships: program.scholarships?.map((scholarship) => ({
+            name: scholarship.name,
+            details: scholarship.details,
+          })) || [], // Default to an empty array if scholarships is undefined
         })),
-      })),
-      postgraduate: university.postgraduate.map((postgrad) => ({
+      })) : [],
+      postgraduate: university.postgraduate ? university.postgraduate.map((postgrad) => ({
         name: postgrad.name,
         programs: postgrad.programs.map((program) => ({
           programName: program.name,
-          fees: program.fees,
+          tuitionFee: program.tuitionFee,
+          applicationFee: program.applicationFee,
+          applicationFeeWaiver: program.applicationFeeWaiver,
+          scholarships: program.scholarships?.map((scholarship) => ({
+            name: scholarship.name,
+            details: scholarship.details,
+          })) || [], // Default to an empty array if scholarships is undefined
         })),
-      })),
-      academic: university.schools.map((school) => ({
+      })) : [],
+
+      academic: university.schools ? university.schools.map((school) => ({
         name: school.name,
         programs: school.programs.map((program) => ({
           programName: program.name,
-          fees: program.fees,
+          tuitionFee: program.tuitionFee,
+          applicationFee: program.applicationFee,
+          applicationFeeWaiver: program.applicationFeeWaiver,
+          scholarships: program.scholarships?.map((scholarship) => ({
+            name: scholarship.name,
+            details: scholarship.details,
+          })) || [], // Default to an empty array if scholarships is undefined
         })),
-      })),
+      })) : [],
     };
 
     res.status(200).json({ message: "success", fees: feesInfo });

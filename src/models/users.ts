@@ -65,9 +65,8 @@ const UserSchema = new mongoose.Schema<IUserDoc>({
   },
 });
 
-UserSchema.pre("save", async function (next) {
+UserSchema.pre("save", async function () {
   this.email = this.email.toLowerCase();
-  next();
 });
 
 export const User = mongoose.model<IUserDoc>("Users", UserSchema);

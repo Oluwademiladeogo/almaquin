@@ -171,9 +171,8 @@ const UniversitySchema: Schema<IUniversityDoc> = new Schema<IUniversityDoc>({
   },
 });
 
-UniversitySchema.pre("save", function (next) {
+UniversitySchema.pre("save", function () {
   this.dateModified = new Date();
-  next();
 });
 
 export const University = mongoose.model<IUniversityDoc>(
